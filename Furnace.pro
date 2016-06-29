@@ -23,7 +23,7 @@ SOURCES += src/main.cpp\
 HEADERS  += src/mainwindow.h \
     src/viewwidget.h \
     #src/modelloader.h \
-    #src/mesh.h \
+    src/mesh.h \
     src/vector3f.h \
     src/vector2f.h \
     src/face.h
