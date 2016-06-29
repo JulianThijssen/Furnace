@@ -12,11 +12,11 @@ TARGET = Furnace
 TEMPLATE = app
 
 
-SOURCES += main.cpp\
-        mainwindow.cpp \
-    viewwidget.cpp
+SOURCES += src/main.cpp\
+        src/mainwindow.cpp \
+    src/viewwidget.cpp
 
-HEADERS  += mainwindow.h \
-    viewwidget.h
+HEADERS  += src/mainwindow.h \
+    src/viewwidget.h
 
-FORMS    += mainwindow.ui
+FORMS    += src/mainwindow.ui
