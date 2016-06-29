@@ -17,13 +17,15 @@ SOURCES += src/main.cpp\
         src/mainwindow.cpp \
     src/viewwidget.cpp \
     #src/modelloader.cpp \
-    src/vector3f.cpp
+    src/vector3f.cpp \
+    src/vector2f.cpp
 
 HEADERS  += src/mainwindow.h \
     src/viewwidget.h \
     #src/modelloader.h \
     #src/mesh.h \
-    src/vector3f.h
+    src/vector3f.h \
+    src/vector2f.h
 
 FORMS    += src/mainwindow.ui
 
