@@ -16,17 +16,18 @@ INCLUDEPATH += 3rdparty/assimp/include
 SOURCES += src/main.cpp\
         src/mainwindow.cpp \
     src/viewwidget.cpp \
-    #src/modelloader.cpp \
+    src/modelloader.cpp \
     src/vector3f.cpp \
     src/vector2f.cpp
 
 HEADERS  += src/mainwindow.h \
     src/viewwidget.h \
-    #src/modelloader.h \
+    src/modelloader.h \
     src/mesh.h \
     src/vector3f.h \
     src/vector2f.h \
-    src/face.h
+    src/face.h \
+    src/model.h
 
 FORMS    += src/mainwindow.ui
 
