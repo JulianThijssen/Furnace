@@ -25,7 +25,8 @@ HEADERS  += src/mainwindow.h \
     #src/modelloader.h \
     #src/mesh.h \
     src/vector3f.h \
-    src/vector2f.h
+    src/vector2f.h \
+    src/face.h
 
 FORMS    += src/mainwindow.ui
 
