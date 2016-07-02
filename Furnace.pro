@@ -19,7 +19,9 @@ SOURCES += src/main.cpp\
     src/modelloader.cpp \
     src/vector3f.cpp \
     src/vector2f.cpp \
-    src/shaderloader.cpp
+    src/shaderloader.cpp \
+    src/matrix4f.cpp \
+    src/shader.cpp
 
 HEADERS  += src/mainwindow.h \
     src/viewwidget.h \
@@ -30,7 +32,8 @@ HEADERS  += src/mainwindow.h \
     src/face.h \
     src/model.h \
     src/shaderloader.h \
-    src/shader.h
+    src/shader.h \
+    src/matrix4f.h
 
 FORMS    += src/mainwindow.ui
 

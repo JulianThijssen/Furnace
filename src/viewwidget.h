@@ -18,6 +18,7 @@ class ViewWidget : public QOpenGLWidget, protected QOpenGLFunctions_3_2_Core
 public:
     ViewWidget(QWidget* parent);
     void setLowPoly(QString fileName);
+    void setHighPoly(QString fileName);
 
 public slots:
     void tick();
@@ -32,6 +33,7 @@ private:
     Shader* diffuseShader;
 
     Model* lowPoly;
+    Model* highPoly;
 //    Matrix4f modelMatrix;
 };
 

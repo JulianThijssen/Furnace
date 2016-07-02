@@ -30,3 +30,15 @@ void MainWindow::on_importLowButton_clicked()
 
     ui->viewWidget->setLowPoly(fileName);
 }
+
+void MainWindow::on_importHighButton_clicked()
+{
+    QString fileName = QFileDialog::getOpenFileName(this,
+                                                    tr("Open File"),
+                                                    "/path/to/file/",tr("OBJ Files (*.obj)"));
+
+
+    qDebug() << fileName;
+
+    ui->viewWidget->setHighPoly(fileName);
+}

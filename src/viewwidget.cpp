@@ -25,6 +25,11 @@ void ViewWidget::setLowPoly(QString fileName) {
     lowPoly = ModelLoader::loadModel(fileName.toStdString().c_str(), true);
 }
 
+void ViewWidget::setHighPoly(QString fileName) {
+    makeCurrent();
+    highPoly = ModelLoader::loadModel(fileName.toStdString().c_str(), true);
+}
+
 void ViewWidget::tick() {
     qDebug() << "UPDATING";
     update();

@@ -18,6 +18,8 @@ public:
 private slots:
     void on_importLowButton_clicked();
 
+    void on_importHighButton_clicked();
+
 private:
     Ui::MainWindow *ui;
 };
