@@ -1,7 +1,6 @@
 #ifndef MODELLOADER_H
 #define MODELLOADER_H
 
-#include <QOpenGLFunctions>
 #include <scene.h>
 
 #include "Model.h"

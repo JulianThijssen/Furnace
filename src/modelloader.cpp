@@ -86,7 +86,7 @@ Model* ModelLoader::uploadModel(const aiScene& scene, const bool resize) {
             f->glGenBuffers(1, &vertexVBO);
             f->glBindBuffer(GL_ARRAY_BUFFER, vertexVBO);
             f->glBufferData(GL_ARRAY_BUFFER, sizeof(float) * aiMesh->mNumVertices * 3, &mesh.vertices[0], GL_STATIC_DRAW);
-            f->glVertexAttribPointer(0, 3, GL_FLOAT, 0, 0, 0);
+            f->glVertexAttribPointer(0, 3, GL_FLOAT, false, 0, 0);
             f->glEnableVertexAttribArray(0);
         }
 
@@ -102,7 +102,7 @@ Model* ModelLoader::uploadModel(const aiScene& scene, const bool resize) {
             f->glGenBuffers(1, &texCoordVBO);
             f->glBindBuffer(GL_ARRAY_BUFFER, texCoordVBO);
             f->glBufferData(GL_ARRAY_BUFFER, sizeof(float) * aiMesh->mNumVertices * 2, &mesh.texCoords[0], GL_STATIC_DRAW);
-            f->glVertexAttribPointer(1, 2, GL_FLOAT, 0, 0, 0);
+            f->glVertexAttribPointer(1, 2, GL_FLOAT, false, 0, 0);
             f->glEnableVertexAttribArray(1);
         }
 
@@ -118,7 +118,7 @@ Model* ModelLoader::uploadModel(const aiScene& scene, const bool resize) {
             f->glGenBuffers(1, &normalVBO);
             f->glBindBuffer(GL_ARRAY_BUFFER, normalVBO);
             f->glBufferData(GL_ARRAY_BUFFER, sizeof(float) * aiMesh->mNumVertices * 3, &mesh.normals[0], GL_STATIC_DRAW);
-            f->glVertexAttribPointer(2, 3, GL_FLOAT, 0, 0, 0);
+            f->glVertexAttribPointer(2, 3, GL_FLOAT, false, 0, 0);
             f->glEnableVertexAttribArray(2);
         }
 

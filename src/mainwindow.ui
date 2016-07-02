@@ -14,7 +14,7 @@
    <string>MainWindow</string>
   </property>
   <widget class="QWidget" name="centralWidget">
-   <widget class="ViewWidget" name="openGLWidget">
+   <widget class="ViewWidget" name="viewWidget">
     <property name="geometry">
      <rect>
       <x>20</x>
@@ -22,6 +22,19 @@
       <width>761</width>
       <height>471</height>
      </rect>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="importLowButton">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>10</y>
+      <width>101</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Import LowPoly</string>
     </property>
    </widget>
   </widget>
