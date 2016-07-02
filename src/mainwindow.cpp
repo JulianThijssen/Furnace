@@ -26,6 +26,10 @@ void MainWindow::on_importLowButton_clicked()
                                                     "/path/to/file/",tr("OBJ Files (*.obj)"));
 
 
+    if (fileName.isEmpty()) {
+        return;
+    }
+
     qDebug() << fileName;
 
     ui->viewWidget->setLowPoly(fileName);
@@ -38,6 +42,9 @@ void MainWindow::on_importHighButton_clicked()
                                                     "/path/to/file/",tr("OBJ Files (*.obj)"));
 
 
+    if (fileName.isEmpty()) {
+        return;
+    }
     qDebug() << fileName;
 
     ui->viewWidget->setHighPoly(fileName);
