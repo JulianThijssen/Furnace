@@ -34,7 +34,6 @@ private:
 
     Model* lowPoly;
     Model* highPoly;
-//    Matrix4f modelMatrix;
 };
 
 #endif // VIEWWIDGET_H

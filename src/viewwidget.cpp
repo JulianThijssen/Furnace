@@ -9,7 +9,7 @@
 #include <QtMath>
 #include <QDebug>
 
-const int UPDATE_RATE = 10;
+const int UPDATE_RATE = 50;
 
 ViewWidget::ViewWidget(QWidget* parent) :
     QOpenGLWidget(parent),
@@ -31,7 +31,6 @@ void ViewWidget::setHighPoly(QString fileName) {
 }
 
 void ViewWidget::tick() {
-    qDebug() << "UPDATING";
     update();
 }
 
@@ -48,29 +47,30 @@ void ViewWidget::initializeGL() {
 }
 
 void ViewWidget::resizeGL(int w, int h) {
+    qDebug() << "RESIZING";
+    diffuseShader->bind();
 
+    Matrix4f projMatrix;
+    float fovyr = qDegreesToRadians(90.f);
+    projMatrix[0] = (float)(1 / tan(fovyr / 2)) / ((float) w / h);
+    projMatrix[5] = (float)(1 / tan(fovyr / 2));
+    projMatrix[10] = (0.1f + 100) / (0.1f - 100);
+    projMatrix[11] = -1;
+    projMatrix[14] = (2 * 0.1f * 100) / (0.1f - 100);
+    projMatrix[15] = -0;
+    diffuseShader->uniformMatrix4f("projMatrix", projMatrix);
+    diffuseShader->unbind();
 }
 
 void ViewWidget::paintGL() {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-    qDebug() << lowPoly;
     if (lowPoly) {
         diffuseShader->bind();
 
-        Matrix4f projMatrix;
-        float fovyr = qDegreesToRadians(90.f);
-        projMatrix[0] = (float)(1 / tan(fovyr / 2)) / 1;
-        projMatrix[5] = (float)(1 / tan(fovyr / 2));
-        projMatrix[10] = (0.1f + 100) / (0.1f - 100);
-        projMatrix[11] = -1;
-        projMatrix[14] = (2 * 0.1f * 100) / (0.1f - 100);
-        projMatrix[15] = -0;
-        diffuseShader->uniformMatrix4f("projMatrix", projMatrix);
-
         Matrix4f modelMatrix;
         modelMatrix.setIdentity();
-        modelMatrix.translate(Vector3f(0, 0, -10.f));
+        modelMatrix.translate(Vector3f(0, 0, -2.f));
         modelMatrix.rotate(45, 0, 1, 0);
         //modelMatrix.scale(Vector3f(0.5f, 0.5f, 0.5f));
         diffuseShader->uniformMatrix4f("modelMatrix", modelMatrix);
@@ -81,7 +81,5 @@ void ViewWidget::paintGL() {
         glDrawElements(GL_TRIANGLES, mesh.indices.size(), GL_UNSIGNED_INT, 0);
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
         glBindVertexArray(0);
-
-        qDebug() << "PAINTING";
     }
 }
