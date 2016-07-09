@@ -70,10 +70,6 @@ void ViewWidget::initializeGL() {
     normalShader = ShaderLoader::loadShaders("res/normal.vert", "res/normal.frag");
     tilesShader = ShaderLoader::loadShaders("res/tiles.vert", "res/tiles.frag");
 
-    texture = TextureLoader::loadTextureTrue("res/Tree.png");
-    texture->create();
-    qDebug() << "TEX ID: " << texture->textureId();
-
     glClearColor(0, 0, 0, 1);
 
     glEnable(GL_DEPTH_TEST);
@@ -115,34 +111,61 @@ float t = 0;
 void ViewWidget::paintGL() {
     //glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-    if (lowPoly) {
-        t += 0.5f;
+//    if (lowPoly) {
+//        t += 0.5f;
+//        glClearColor(1, 1, 1, 1);
+//        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+//        diffuseShader->bind();
+
+//        if (bakedNormal) {
+//            glActiveTexture(GL_TEXTURE0);
+//            glBindTexture(GL_TEXTURE_2D, bakedNormal);
+//            diffuseShader->uniform1i("albedo", 0);
+//            diffuseShader->uniform1i("hasAlbedo", 1);
+//        } else {
+//            diffuseShader->uniform1i("hasAlbedo", 0);
+//        }
+
+//        Matrix4f modelMatrix;
+//        modelMatrix.setIdentity();
+//        modelMatrix.translate(Vector3f(0, 0, -1.5f));
+//        modelMatrix.rotate(t, 0, 1, 0);
+//        //modelMatrix.scale(Vector3f(0.5f, 0.5f, 0.5f));
+//        diffuseShader->uniformMatrix4f("modelMatrix", modelMatrix);
+
+//        Mesh mesh = lowPoly->meshes[0];
+//        glBindVertexArray(mesh.handle);
+//        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mesh.faceVBO);
+//        glDrawElements(GL_TRIANGLES, mesh.indices.size(), GL_UNSIGNED_INT, 0);
+//        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+//        glBindVertexArray(0);
+//    }
+
+    if (bakedNormal) {
         glClearColor(1, 1, 1, 1);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
         diffuseShader->bind();
 
-        if (bakedNormal) {
-            glBindTexture(GL_TEXTURE_2D, bakedNormal);
-            diffuseShader->uniform1i("albedo", 0);
-            diffuseShader->uniform1i("hasAlbedo", 1);
-        } else {
-            diffuseShader->uniform1i("hasAlbedo", 0);
-        }
+        glActiveTexture(GL_TEXTURE0);
+        glBindTexture(GL_TEXTURE_2D, bakedNormal);
+        diffuseShader->uniform1i("albedo", 0);
+        diffuseShader->uniform1i("hasAlbedo", 1);
 
         Matrix4f modelMatrix;
         modelMatrix.setIdentity();
-        modelMatrix.translate(Vector3f(0, 0, -2.f));
-        modelMatrix.rotate(t, 0, 1, 0);
-        //modelMatrix.scale(Vector3f(0.5f, 0.5f, 0.5f));
+        modelMatrix.translate(Vector3f(0, 0, -1.f));
         diffuseShader->uniformMatrix4f("modelMatrix", modelMatrix);
 
-        Mesh mesh = lowPoly->meshes[0];
+        Mesh mesh = quad->meshes[0];
         glBindVertexArray(mesh.handle);
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mesh.faceVBO);
         glDrawElements(GL_TRIANGLES, mesh.indices.size(), GL_UNSIGNED_INT, 0);
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
         glBindVertexArray(0);
+
+        diffuseShader->unbind();
     }
 }
 
@@ -157,7 +180,6 @@ qDebug() << "Rendering normal..";
 
     glClearColor(0.5f, 0.5f, 1, 1);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-qDebug() << "POST ENABLE";
     glEnable(GL_STENCIL_TEST);
 
     Mesh mesh = highPoly->meshes[0];
@@ -172,7 +194,7 @@ qDebug() << "POST ENABLE";
     for (uint i = 0; i < mesh.indices.size(); i++) {
         triList[i] = (float) mesh.indices[i];
     }
-qDebug() << "POST TRILIST";
+
     std::vector<float> vertexList;
     vertexList.resize(aWidth * aHeight * 4, 0);
     for (uint i = 0; i < mesh.vertices.size(); i++) {
@@ -181,7 +203,7 @@ qDebug() << "POST TRILIST";
         vertexList[i * 4 + 2] = mesh.vertices[i].z;
         vertexList[i * 4 + 3] = 1;
     }
-qDebug() << "POST VERTEXLIST";
+
     std::vector<float> normalList;
     normalList.resize(aWidth * aHeight * 4, 0);
     for (uint i = 0; i < mesh.normals.size(); i++) {
@@ -190,13 +212,22 @@ qDebug() << "POST VERTEXLIST";
         normalList[i * 4 + 2] = mesh.normals[i].z;
         normalList[i * 4 + 3] = 0;
     }
-qDebug() << "POST NORMALLIST";
+
     GLuint triListMap = TextureLoader::createArray(aWidth, aHeight, GL_R32F, GL_RED, GL_FLOAT, &triList[0]);
     GLuint vertexMap = TextureLoader::createArray(aWidth, aHeight, GL_RGBA32F, GL_RGBA, GL_FLOAT, &vertexList[0]);
     GLuint normalMap = TextureLoader::createArray(aWidth, aHeight, GL_RGBA32F, GL_RGBA, GL_FLOAT, &normalList[0]);
-qDebug() << "POST ARRAYS";
-    float tileSize = 1.0f / TILES;
 
+    float tileSize = 1.0f / TILES;
+//    projMatrix.setIdentity();
+//    projMatrix[0] = 2 / (1 - 0);
+//    projMatrix[5] = 2 / (1 - 0);
+//    projMatrix[10] = -2 / (1 - -1);
+//    projMatrix[12] = (-1 - 0) / (1 - 0);
+//    projMatrix[13] = (-1 - 0) / (1 - 0);
+//    projMatrix[14] = (-1 - -1) / (1 - -1);
+
+//    normalShader->bind();
+//    normalShader->uniformMatrix4f("projMatrix", projMatrix);
     for (unsigned int x = 0; x < TILES; x++) {
         for (unsigned int y = 0; y < TILES; y++) {
             //qDebug() << x << " " << y;
@@ -251,7 +282,7 @@ qDebug() << "X: " << -1+x*tileSize*2 << " Y: " << -1+y*tileSize*2;
     }
 
     glDisable(GL_STENCIL_TEST);
-qDebug() << "SIZE UCHAR: " << sizeof(unsigned char);
+
     unsigned char *pixels = new unsigned char[width * height * 4];
     glReadPixels(0, 0, width, height, GL_RGBA, GL_UNSIGNED_BYTE, pixels);
     Image image(width, height);
@@ -265,4 +296,5 @@ qDebug() << "SIZE UCHAR: " << sizeof(unsigned char);
     double elapsed_secs = double(end - begin) / CLOCKS_PER_SEC;
     qDebug() << "Rendering took: " << elapsed_secs;
     //qDebug() << "Rendering took" << timer.waitForResult() << "microseconds";
+    update();
 }
