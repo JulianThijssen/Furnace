@@ -29,6 +29,87 @@ Model* ModelLoader::loadModel(const char* path, const bool resize) {
     return model;
 }
 
+void ModelLoader::uploadMesh(Mesh& mesh) {
+    QOpenGLFunctions_3_2_Core *f = QOpenGLContext::currentContext()->versionFunctions<QOpenGLFunctions_3_2_Core>();
+
+    // Generate vertex array object
+    GLuint vao;
+    f->glGenVertexArrays(1, &vao);
+    f->glBindVertexArray(vao);
+
+    // Store faces in a buffer
+    GLuint faceVBO;
+    f->glGenBuffers(1, &faceVBO);
+    f->glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, faceVBO);
+    f->glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(unsigned int) * mesh.numFaces * 3, &mesh.indices[0], GL_STATIC_DRAW);
+    f->glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+
+    // Store vertices in a buffer
+    if (mesh.vertices.size()) {
+        GLuint vertexVBO;
+        f->glGenBuffers(1, &vertexVBO);
+        f->glBindBuffer(GL_ARRAY_BUFFER, vertexVBO);
+        f->glBufferData(GL_ARRAY_BUFFER, sizeof(float) * mesh.vertices.size() * 3, &mesh.vertices[0], GL_STATIC_DRAW);
+        f->glVertexAttribPointer(0, 3, GL_FLOAT, 0, 0, 0);
+        f->glEnableVertexAttribArray(0);
+    }
+
+    // Store texture coordinates in a buffer
+    if (mesh.texCoords.size()) {
+        GLuint texCoordVBO;
+        f->glGenBuffers(1, &texCoordVBO);
+        f->glBindBuffer(GL_ARRAY_BUFFER, texCoordVBO);
+        f->glBufferData(GL_ARRAY_BUFFER, sizeof(float) * mesh.texCoords.size() * 2, &mesh.texCoords[0], GL_STATIC_DRAW);
+        f->glVertexAttribPointer(1, 2, GL_FLOAT, 0, 0, 0);
+        f->glEnableVertexAttribArray(1);
+    }
+
+    // Store normals in a buffer
+    if (mesh.normals.size()) {
+        GLuint normalVBO;
+        f->glGenBuffers(1, &normalVBO);
+        f->glBindBuffer(GL_ARRAY_BUFFER, normalVBO);
+        f->glBufferData(GL_ARRAY_BUFFER, sizeof(float) * mesh.normals.size() * 3, &mesh.normals[0], GL_STATIC_DRAW);
+        f->glVertexAttribPointer(2, 3, GL_FLOAT, 0, 0, 0);
+        f->glEnableVertexAttribArray(2);
+    }
+
+    // Store tangents in a buffer
+    if (mesh.tangents.size()) {
+        GLuint tangentVBO;
+        f->glGenBuffers(1, &tangentVBO);
+        f->glBindBuffer(GL_ARRAY_BUFFER, tangentVBO);
+        f->glBufferData(GL_ARRAY_BUFFER, sizeof(float) * mesh.tangents.size() * 3, &mesh.tangents[0], GL_STATIC_DRAW);
+        f->glVertexAttribPointer(3, 3, GL_FLOAT, 0, 0, 0);
+        f->glEnableVertexAttribArray(3);
+
+        GLuint bitangentVBO;
+        f->glGenBuffers(1, &bitangentVBO);
+        f->glBindBuffer(GL_ARRAY_BUFFER, bitangentVBO);
+        f->glBufferData(GL_ARRAY_BUFFER, sizeof(float) * mesh.bitangents.size() * 3, &mesh.bitangents[0], GL_STATIC_DRAW);
+        f->glVertexAttribPointer(4, 3, GL_FLOAT, 0, 0, 0);
+        f->glEnableVertexAttribArray(4);
+    }
+
+    // Store ray directions
+    if (mesh.raydirs.size()) {
+        GLuint raydirVBO;
+        f->glGenBuffers(1, &raydirVBO);
+        f->glBindBuffer(GL_ARRAY_BUFFER, raydirVBO);
+        f->glBufferData(GL_ARRAY_BUFFER, sizeof(float) * mesh.raydirs.size() * 3, &mesh.raydirs[0], GL_STATIC_DRAW);
+        f->glVertexAttribPointer(5, 3, GL_FLOAT, 0, 0, 0);
+        f->glEnableVertexAttribArray(5);
+    }
+
+    // Unbind the buffers
+    f->glBindBuffer(GL_ARRAY_BUFFER, 0);
+    f->glBindVertexArray(0);
+
+    // Store relevant data in the new mesh
+    mesh.handle = vao;
+    mesh.faceVBO = faceVBO;
+}
+
 Model* ModelLoader::uploadModel(const aiScene& scene, const bool resize) {
     QOpenGLFunctions_3_2_Core *f = QOpenGLContext::currentContext()->versionFunctions<QOpenGLFunctions_3_2_Core>();
 

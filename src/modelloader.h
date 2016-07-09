@@ -11,6 +11,8 @@ public:
     ModelLoader();
 
     static Model* loadModel(const char* path, const bool resize);
+
+    static void uploadMesh(Mesh& mesh);
     static Model* uploadModel(const aiScene& scene, const bool resize);
 };
 
