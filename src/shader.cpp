@@ -1,6 +1,6 @@
 #include "shader.h"
 
-#include "Matrix4f.h"
+#include "util/matrix4f.h"
 #include <QDebug>
 
 Shader::Shader(GLuint handle) {

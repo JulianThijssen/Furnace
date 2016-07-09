@@ -3,8 +3,8 @@
 
 #include "Face.h"
 
-#include "Vector3f.h"
-#include "Vector2f.h"
+#include "util/vector3f.h"
+#include "util/vector2f.h"
 
 #include <vector>
 #include <string>

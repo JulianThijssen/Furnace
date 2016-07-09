@@ -1,11 +1,11 @@
 #include "normalgenerator.h"
 
 #include "TextureLoader.h"
-#include "Vector3f.h"
+#include "util/vector3f.h"
 #include "Image.h"
 #include "mesh.h"
-#include "Color.h"
-#include "Math.h"
+#include "util/color.h"
+#include "util/math.h"
 
 #include <iostream>
 
