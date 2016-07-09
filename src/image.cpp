@@ -1,12 +1,12 @@
 #include "image.h"
 
-#include "Color.h"
+#include "util/color.h"
 #include <cstdlib>
 
 Image::Image(int width, int height) {
     this->width = width;
     this->height = height;
-    this->data = (unsigned char*) calloc(width * height * 3, sizeof(unsigned char));
+    this->data = (unsigned char*) calloc(width * height * 4, sizeof(unsigned char));
 }
 
 int Image::getWidth() {
