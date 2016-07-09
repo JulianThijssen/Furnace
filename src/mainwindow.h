@@ -20,6 +20,8 @@ private slots:
 
     void on_importHighButton_clicked();
 
+    void on_bakeNormalButton_clicked();
+
 private:
     Ui::MainWindow *ui;
 };

@@ -49,3 +49,8 @@ void MainWindow::on_importHighButton_clicked()
 
     ui->viewWidget->setHighPoly(fileName);
 }
+
+void MainWindow::on_bakeNormalButton_clicked()
+{
+    ui->viewWidget->renderNormal(1024, 1024);
+}
