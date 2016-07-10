@@ -16,7 +16,7 @@
 #include <QDebug>
 
 const int UPDATE_RATE = 10;
-const int TILES = 16;
+const int TILES = 4;
 
 ViewWidget::ViewWidget(QWidget* parent) :
     QOpenGLWidget(parent),
@@ -180,7 +180,6 @@ qDebug() << "Rendering normal..";
 
     glClearColor(0.5f, 0.5f, 1, 1);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-    glEnable(GL_STENCIL_TEST);
 
     Mesh mesh = highPoly->meshes[0];
     qDebug() << "Sizes: " << mesh.indices.size() << ", " << mesh.vertices.size() << ", " << mesh.normals.size();
@@ -218,70 +217,61 @@ qDebug() << "Rendering normal..";
     GLuint normalMap = TextureLoader::createArray(aWidth, aHeight, GL_RGBA32F, GL_RGBA, GL_FLOAT, &normalList[0]);
 
     float tileSize = 1.0f / TILES;
-//    projMatrix.setIdentity();
-//    projMatrix[0] = 2 / (1 - 0);
-//    projMatrix[5] = 2 / (1 - 0);
-//    projMatrix[10] = -2 / (1 - -1);
-//    projMatrix[12] = (-1 - 0) / (1 - 0);
-//    projMatrix[13] = (-1 - 0) / (1 - 0);
-//    projMatrix[14] = (-1 - -1) / (1 - -1);
 
-//    normalShader->bind();
-//    normalShader->uniformMatrix4f("projMatrix", projMatrix);
+    normalShader->bind();
+
+    // Upload triangle lists
+    glActiveTexture(GL_TEXTURE0);
+    glBindTexture(GL_TEXTURE_2D, triListMap);
+    normalShader->uniform1i("triList", 0);
+    glActiveTexture(GL_TEXTURE1);
+    glBindTexture(GL_TEXTURE_2D, vertexMap);
+    normalShader->uniform1i("vertexList", 1);
+    glActiveTexture(GL_TEXTURE2);
+    glBindTexture(GL_TEXTURE_2D, normalMap);
+    normalShader->uniform1i("normalList", 2);
+
+    Matrix4f projMatrix;
+
+    glBindVertexArray(cage->handle);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, cage->faceVBO);
+
     for (unsigned int x = 0; x < TILES; x++) {
         for (unsigned int y = 0; y < TILES; y++) {
             //qDebug() << x << " " << y;
-            glColorMask(GL_FALSE, GL_FALSE, GL_FALSE, GL_FALSE);
-            glDepthMask(GL_FALSE);
-            glStencilFunc(GL_NEVER, 1, 0xFF);
-            glStencilOp(GL_REPLACE, GL_KEEP, GL_KEEP);
-            glStencilMask(0xFF);
-            glClear(GL_STENCIL_BUFFER_BIT);
+            qDebug() << "X: " << -1+x*tileSize << " Y: " << -1+y*tileSize;
 
-            tilesShader->bind();
-            Matrix4f modelMatrix;
-            modelMatrix.translate(Vector3f(-1+tileSize + x*tileSize*2, -1+tileSize + y*tileSize*2, 0));
-            modelMatrix.scale(Vector3f(tileSize, tileSize, 1));
-            tilesShader->uniformMatrix4f("modelMatrix", modelMatrix);
-qDebug() << "X: " << -1+x*tileSize*2 << " Y: " << -1+y*tileSize*2;
-            glBindVertexArray(quad->meshes[0].handle);
-            glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, quad->meshes[0].faceVBO);
-            glDrawElements(GL_TRIANGLES, quad->meshes[0].indices.size(), GL_UNSIGNED_INT, 0);
-            glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
-            glBindVertexArray(0);
-            tilesShader->unbind();
+            float left = 0 + x * tileSize;
+            float right = 0 + (x+1) * tileSize;
+            float bottom = 0 + y * tileSize;
+            float top = 0 + (y+1) * tileSize;
+            float zNear = -1;
+            float zFar = 1;
 
-            glColorMask(GL_TRUE, GL_TRUE, GL_TRUE, GL_TRUE);
-            glDepthMask(GL_TRUE);
-            glStencilMask(0x00);
-            glStencilFunc(GL_EQUAL, 1, 0xFF);
+            projMatrix.setIdentity();
+            projMatrix[0] = 2 / (right - left);
+            projMatrix[5] = 2 / (top - bottom);
+            projMatrix[10] = -2 / (zFar - zNear);
+            projMatrix[12] = (-right - left) / (right - left);
+            projMatrix[13] = (-top - bottom) / (top - bottom);
+            projMatrix[14] = (-zFar - zNear) / (zFar - zNear);
+            float tileWidth = width / TILES;
+            float tileHeight = height / TILES;
+            glViewport(x * tileWidth, y * tileHeight, tileWidth, tileHeight);
 
-            normalShader->bind();
+            normalShader->uniformMatrix4f("projMatrix", projMatrix);
+
             normalShader->uniform1i("arrayWidth", aWidth);
             normalShader->uniform1i("arrayHeight", aHeight);
 
-            // Upload triangle lists
-            glActiveTexture(GL_TEXTURE0);
-            glBindTexture(GL_TEXTURE_2D, triListMap);
-            normalShader->uniform1i("triList", 0);
-            glActiveTexture(GL_TEXTURE1);
-            glBindTexture(GL_TEXTURE_2D, vertexMap);
-            normalShader->uniform1i("vertexList", 1);
-            glActiveTexture(GL_TEXTURE2);
-            glBindTexture(GL_TEXTURE_2D, normalMap);
-            normalShader->uniform1i("normalList", 2);
-
-            glBindVertexArray(cage->handle);
-            glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, cage->faceVBO);
             glDrawElements(GL_TRIANGLES, cage->indices.size(), GL_UNSIGNED_INT, 0);
-            glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
-            glBindVertexArray(0);
 
             glFinish();
         }
     }
 
-    glDisable(GL_STENCIL_TEST);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+    glBindVertexArray(0);
 
     unsigned char *pixels = new unsigned char[width * height * 4];
     glReadPixels(0, 0, width, height, GL_RGBA, GL_UNSIGNED_BYTE, pixels);
