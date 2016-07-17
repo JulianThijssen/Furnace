@@ -44,6 +44,7 @@ private:
     Shader* diffuseShader;
     Shader* normalShader;
     Shader* tilesShader;
+    Shader* colorShader;
 
     Mesh* cage;
     Model* lowPoly;
@@ -51,6 +52,7 @@ private:
     Model* quad;
 
     QOpenGLTexture* texture;
+    GLuint debugNormals = 0;
     GLuint bakedNormal = 0;
 };
 

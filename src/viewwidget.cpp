@@ -22,6 +22,10 @@ ViewWidget::ViewWidget(QWidget* parent) :
     QOpenGLWidget(parent),
     lowPoly(nullptr),
     highPoly(nullptr),
+    diffuseShader(nullptr),
+    normalShader(nullptr),
+    tilesShader(nullptr),
+    colorShader(nullptr),
     cage(nullptr)
 {
     timer = new QTimer(this);
@@ -37,6 +41,8 @@ ViewWidget::~ViewWidget() {
     free(timer);
     free(diffuseShader);
     free(normalShader);
+    free(tilesShader);
+    free(colorShader);
     free(lowPoly);
     free(highPoly);
     free(texture);
@@ -46,6 +52,7 @@ ViewWidget::~ViewWidget() {
 void ViewWidget::setLowPoly(QString fileName) {
     makeCurrent();
     lowPoly = ModelLoader::loadModel(fileName.toStdString().c_str(), true);
+    debugNormals = ModelLoader::createDebugNormals(lowPoly->meshes[0], 0.1f);
 
     cage = Cage::generateCage(lowPoly->meshes[0], 0.5f);
     quad = ModelLoader::loadModel("res/Quad.obj", false);
@@ -69,6 +76,7 @@ void ViewWidget::initializeGL() {
     diffuseShader = ShaderLoader::loadShaders("res/diffuse.vert", "res/diffuse.frag");
     normalShader = ShaderLoader::loadShaders("res/normal.vert", "res/normal.frag");
     tilesShader = ShaderLoader::loadShaders("res/tiles.vert", "res/tiles.frag");
+    colorShader = ShaderLoader::loadShaders("res/color.vert", "res/color.frag");
 
     glClearColor(0, 0, 0, 1);
 
@@ -93,6 +101,9 @@ void ViewWidget::resizeGL(int w, int h) {
     diffuseShader->bind();
     diffuseShader->uniformMatrix4f("projMatrix", projMatrix);
     diffuseShader->unbind();
+    colorShader->bind();
+    colorShader->uniformMatrix4f("projMatrix", projMatrix);
+    colorShader->unbind();
 
     projMatrix.setIdentity();
     projMatrix[0] = 2 / (1 - 0);
@@ -109,38 +120,46 @@ void ViewWidget::resizeGL(int w, int h) {
 
 float t = 0;
 void ViewWidget::paintGL() {
-    //glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-//    if (lowPoly) {
-//        t += 0.5f;
-//        glClearColor(1, 1, 1, 1);
-//        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    if (lowPoly) {
+        t += 0.2f;
+        glClearColor(0, 0, 0, 1);
+        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-//        diffuseShader->bind();
+        diffuseShader->bind();
 
-//        if (bakedNormal) {
-//            glActiveTexture(GL_TEXTURE0);
-//            glBindTexture(GL_TEXTURE_2D, bakedNormal);
-//            diffuseShader->uniform1i("albedo", 0);
-//            diffuseShader->uniform1i("hasAlbedo", 1);
-//        } else {
-//            diffuseShader->uniform1i("hasAlbedo", 0);
-//        }
+        if (bakedNormal) {
+            glActiveTexture(GL_TEXTURE0);
+            glBindTexture(GL_TEXTURE_2D, bakedNormal);
+            diffuseShader->uniform1i("albedo", 0);
+            diffuseShader->uniform1i("hasAlbedo", 1);
+        } else {
+            diffuseShader->uniform1i("hasAlbedo", 0);
+        }
 
-//        Matrix4f modelMatrix;
-//        modelMatrix.setIdentity();
-//        modelMatrix.translate(Vector3f(0, 0, -1.5f));
-//        modelMatrix.rotate(t, 0, 1, 0);
-//        //modelMatrix.scale(Vector3f(0.5f, 0.5f, 0.5f));
-//        diffuseShader->uniformMatrix4f("modelMatrix", modelMatrix);
+        Matrix4f modelMatrix;
+        modelMatrix.setIdentity();
+        modelMatrix.translate(Vector3f(0, 0, -1.5f));
+        modelMatrix.rotate(t, 0, 1, 0);
+        //modelMatrix.scale(Vector3f(0.5f, 0.5f, 0.5f));
+        diffuseShader->uniformMatrix4f("modelMatrix", modelMatrix);
 
-//        Mesh mesh = lowPoly->meshes[0];
-//        glBindVertexArray(mesh.handle);
-//        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mesh.faceVBO);
-//        glDrawElements(GL_TRIANGLES, mesh.indices.size(), GL_UNSIGNED_INT, 0);
-//        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
-//        glBindVertexArray(0);
-//    }
+        Mesh mesh = lowPoly->meshes[0];
+        glBindVertexArray(mesh.handle);
+        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mesh.faceVBO);
+        glDrawElements(GL_TRIANGLES, mesh.indices.size(), GL_UNSIGNED_INT, 0);
+        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+        glBindVertexArray(0);
+
+
+        colorShader->bind();
+        colorShader->uniformMatrix4f("modelMatrix", modelMatrix);
+        glBindVertexArray(debugNormals);
+        glDrawArrays(GL_LINES, 0, mesh.vertices.size() * 2);
+        glBindVertexArray(0);
+        colorShader->unbind();
+    }
 
     if (bakedNormal) {
         glClearColor(1, 1, 1, 1);

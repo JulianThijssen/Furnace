@@ -81,7 +81,6 @@ Mesh* Cage::generateCage(const Mesh& mesh, const float offset) {
     //	std::cout << std::endl;
     //}
 
-    qDebug() << "Model vertices: " << mesh.vertices.size();
     qDebug() << "Cage vertices: " << cage->vertices.size();
 
     //qDebug() << "Generating cage took: " << timer.getTime() << " seconds";

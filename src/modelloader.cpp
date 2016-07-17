@@ -6,7 +6,6 @@
 #include "Model.h"
 #include "Mesh.h"
 
-#include <QOpenGLFunctions_3_2_Core>
 #include <QDebug>
 
 ModelLoader::ModelLoader()
@@ -27,6 +26,31 @@ Model* ModelLoader::loadModel(const char* path, const bool resize) {
     Model* model = uploadModel(*scene, resize);
 
     return model;
+}
+
+GLuint ModelLoader::createDebugNormals(Mesh& mesh, const float length) {
+    QOpenGLFunctions_3_2_Core *f = QOpenGLContext::currentContext()->versionFunctions<QOpenGLFunctions_3_2_Core>();
+
+    std::vector<Vector3f> lines;
+    lines.resize(mesh.vertices.size() * 2);
+    for (int i = 0; i < mesh.vertices.size(); i++) {
+        Vector3f v(mesh.vertices[i]);
+        lines[i*2+0] = v;
+        lines[i*2+1] = v + Vector3f(mesh.normals[i]) * 0.1f;
+    }
+
+    GLuint normalVAO;
+    f->glGenVertexArrays(1, &normalVAO);
+    f->glBindVertexArray(normalVAO);
+    GLuint buffer;
+    f->glGenBuffers(1, &buffer);
+    f->glBindBuffer(GL_ARRAY_BUFFER, buffer);
+    f->glBufferData(GL_ARRAY_BUFFER, lines.size() * 3 * sizeof(float), &lines[0], GL_STATIC_DRAW);
+    f->glVertexAttribPointer(0, 3, GL_FLOAT, false, 0, 0);
+    f->glEnableVertexAttribArray(0);
+    f->glBindVertexArray(0);
+
+    return normalVAO;
 }
 
 void ModelLoader::uploadMesh(Mesh& mesh) {
@@ -126,6 +150,9 @@ Model* ModelLoader::uploadModel(const aiScene& scene, const bool resize) {
             mesh.indices[j * 3 + 1] = face.mIndices[1];
             mesh.indices[j * 3 + 2] = face.mIndices[2];
         }
+
+        qDebug() << "Model vertices: " << aiMesh->mNumVertices;
+        qDebug() << "Model faces: " << aiMesh->mNumFaces;
 
         // Generate vertex array object
         GLuint vao;
