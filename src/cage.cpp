@@ -31,11 +31,9 @@ Mesh* Cage::generateCage(const Mesh& mesh, const float offset) {
 
     // Initialise buckets
     int numBuckets = 1000;
-    for (int i = 0; i < numBuckets; i++) {
-        vertexBuckets.push_back(std::vector<int>());
-    }
+    vertexBuckets.resize(numBuckets, std::vector<int>());
 
-    // Inflate the model
+    // Divide mesh vertex indices into their allotted buckets
     for (int i = 0; i < mesh.vertices.size(); i++) {
         Vector3f rv = mesh.vertices[i];
 
@@ -48,21 +46,25 @@ Mesh* Cage::generateCage(const Mesh& mesh, const float offset) {
     for (int i = 0; i < mesh.vertices.size(); i++) {
         Vector3f rv = mesh.vertices[i];
 
-        Vector3f rayDir;
+        Vector3f rayDir(0, 0, 0);
 
         int bucket = generateHash(rv, numBuckets);
 
         for (int b = -1; b <= 1; b++) {
+            // Also look in neighbouring buckets
             int tbucket = bucket + b;
             if (tbucket < 0) { tbucket = 0; }
             if (tbucket > numBuckets - 1) { tbucket = numBuckets - 1; }
 
+            // Get list of vertices in current bucket
             std::vector<int> vBucket = vertexBuckets[tbucket];
+
+            // For every
             for (int j = 0; j < vBucket.size(); j++) {
-                int index = vBucket[j];
-                Vector3f v = mesh.vertices[index];
+                int bucketIndex = vBucket[j];
+                Vector3f v = mesh.vertices[bucketIndex];
                 if ((rv - v).length() < 0.001f) {
-                    rayDir += mesh.normals[index];
+                    rayDir += mesh.normals[bucketIndex];
                 }
             }
         }
@@ -80,7 +82,7 @@ Mesh* Cage::generateCage(const Mesh& mesh, const float offset) {
     //		std::cout << " " << vertexBuckets[i].size();
     //	std::cout << std::endl;
     //}
-
+    qDebug() << "Precage vertices: " << mesh.vertices.size();
     qDebug() << "Cage vertices: " << cage->vertices.size();
 
     //qDebug() << "Generating cage took: " << timer.getTime() << " seconds";
