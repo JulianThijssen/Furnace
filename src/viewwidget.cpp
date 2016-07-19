@@ -177,8 +177,7 @@ void ViewWidget::paintGL() {
     }
 
     if (bakedNormal) {
-        glClearColor(1, 1, 1, 1);
-        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+        glClear(GL_DEPTH_BUFFER_BIT);
 
         diffuseShader->bind();
 
@@ -189,7 +188,8 @@ void ViewWidget::paintGL() {
 
         Matrix4f modelMatrix;
         modelMatrix.setIdentity();
-        modelMatrix.translate(Vector3f(0, 0, -1.f));
+        modelMatrix.translate(Vector3f(1.0f, -0.75f, -1.f));
+        modelMatrix.scale(Vector3f(0.25f, 0.25f, 1));
         diffuseShader->uniformMatrix4f("modelMatrix", modelMatrix);
 
         Mesh mesh = quad->meshes[0];
