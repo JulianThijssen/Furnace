@@ -22,6 +22,8 @@ private slots:
 
     void on_bakeNormalButton_clicked();
 
+    void on_exportNormalButton_clicked();
+
 private:
     Ui::MainWindow *ui;
 };

@@ -27,13 +27,13 @@ QOpenGLTexture* TextureLoader::loadTextureTrue(const char* path) {
     return tex;
 }
 
-void TextureLoader::storeTexture(const char* path, Image image) {
+void TextureLoader::storeTexture(const char* path, Image* image) {
     //SOIL_save_image(path, SOIL_SAVE_TYPE_BMP, 256, 256, 3, image.getData());
-    QImage qimage(image.getWidth(), image.getHeight(), QImage::Format_RGBA8888);
-    unsigned char* pixels = image.getData();
+    QImage qimage(image->getWidth(), image->getHeight(), QImage::Format_RGBA8888);
+    unsigned char* pixels = image->getData();
 
-    for (unsigned int i = 0; i < image.getHeight(); i++) {
-        memcpy(qimage.scanLine(i), pixels + i*image.getWidth()*4, image.getWidth()*4);
+    for (unsigned int i = 0; i < image->getHeight(); i++) {
+        memcpy(qimage.scanLine(i), pixels + i*image->getWidth()*4, image->getWidth()*4);
     }
 
     qimage = qimage.mirrored();

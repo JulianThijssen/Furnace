@@ -13,6 +13,7 @@
 #include "framebuffer.h"
 #include "model.h"
 #include "shader.h"
+#include "image.h"
 #include "util/matrix4f.h"
 
 class ViewWidget : public QOpenGLWidget, protected QOpenGLFunctions_3_2_Core
@@ -24,6 +25,7 @@ public:
 
     void setLowPoly(QString fileName);
     void setHighPoly(QString fileName);
+    void save(QString fileName);
 
     void renderNormal(const int width, const int height);
 
@@ -54,6 +56,8 @@ private:
     QOpenGLTexture* texture;
     GLuint debugNormals = 0;
     GLuint bakedNormal = 0;
+
+    Image* normalMap;
 };
 
 #endif // VIEWWIDGET_H

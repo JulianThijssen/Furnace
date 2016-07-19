@@ -22,7 +22,7 @@ MainWindow::~MainWindow()
 void MainWindow::on_importLowButton_clicked()
 {
     QString fileName = QFileDialog::getOpenFileName(this,
-                                                    tr("Open File"),
+                                                    tr("Open Low Poly Model"),
                                                     "/path/to/file/",tr("OBJ Files (*.obj)"));
 
 
@@ -38,7 +38,7 @@ void MainWindow::on_importLowButton_clicked()
 void MainWindow::on_importHighButton_clicked()
 {
     QString fileName = QFileDialog::getOpenFileName(this,
-                                                    tr("Open File"),
+                                                    tr("Open High Poly Model"),
                                                     "/path/to/file/",tr("OBJ Files (*.obj)"));
 
 
@@ -53,4 +53,18 @@ void MainWindow::on_importHighButton_clicked()
 void MainWindow::on_bakeNormalButton_clicked()
 {
     ui->viewWidget->renderNormal(1024, 1024);
+}
+
+void MainWindow::on_exportNormalButton_clicked()
+{
+    QString fileName = QFileDialog::getSaveFileName(this,
+                                                    tr("Export Normal Map"),
+                                                    "/path/to/file/", tr("Images (*.png *.tga *.bmp *.tif)"));
+
+
+    if (fileName.isEmpty()) {
+        return;
+    }
+    qDebug() << fileName;
+    ui->viewWidget->save(fileName);
 }

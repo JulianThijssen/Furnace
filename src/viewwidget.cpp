@@ -63,6 +63,9 @@ void ViewWidget::setHighPoly(QString fileName) {
     highPoly = ModelLoader::loadModel(fileName.toStdString().c_str(), true);
 }
 
+void ViewWidget::save(QString fileName) {
+    TextureLoader::storeTexture(fileName.toStdString().c_str(), normalMap);
+}
 
 void ViewWidget::tick() {
     update();
@@ -243,9 +246,9 @@ qDebug() << "Rendering normal..";
         normalList[i * 4 + 3] = 0;
     }
 
-    GLuint triListMap = TextureLoader::createArray(aWidth, aHeight, GL_R32F, GL_RED, GL_FLOAT, &triList[0]);
-    GLuint vertexMap = TextureLoader::createArray(aWidth, aHeight, GL_RGBA32F, GL_RGBA, GL_FLOAT, &vertexList[0]);
-    GLuint normalMap = TextureLoader::createArray(aWidth, aHeight, GL_RGBA32F, GL_RGBA, GL_FLOAT, &normalList[0]);
+    GLuint triListTex = TextureLoader::createArray(aWidth, aHeight, GL_R32F, GL_RED, GL_FLOAT, &triList[0]);
+    GLuint vertexTex = TextureLoader::createArray(aWidth, aHeight, GL_RGBA32F, GL_RGBA, GL_FLOAT, &vertexList[0]);
+    GLuint normalTex = TextureLoader::createArray(aWidth, aHeight, GL_RGBA32F, GL_RGBA, GL_FLOAT, &normalList[0]);
 
     float tileSize = 1.0f / TILES;
 
@@ -253,13 +256,13 @@ qDebug() << "Rendering normal..";
 
     // Upload triangle lists
     glActiveTexture(GL_TEXTURE0);
-    glBindTexture(GL_TEXTURE_2D, triListMap);
+    glBindTexture(GL_TEXTURE_2D, triListTex);
     normalShader->uniform1i("triList", 0);
     glActiveTexture(GL_TEXTURE1);
-    glBindTexture(GL_TEXTURE_2D, vertexMap);
+    glBindTexture(GL_TEXTURE_2D, vertexTex);
     normalShader->uniform1i("vertexList", 1);
     glActiveTexture(GL_TEXTURE2);
-    glBindTexture(GL_TEXTURE_2D, normalMap);
+    glBindTexture(GL_TEXTURE_2D, normalTex);
     normalShader->uniform1i("normalList", 2);
 
     Matrix4f projMatrix;
@@ -306,9 +309,8 @@ qDebug() << "Rendering normal..";
 
     unsigned char *pixels = new unsigned char[width * height * 4];
     glReadPixels(0, 0, width, height, GL_RGBA, GL_UNSIGNED_BYTE, pixels);
-    Image image(width, height);
-    image.setData(pixels);
-    TextureLoader::storeTexture("res/OutputNRM.bmp", image);
+    normalMap = new Image(width, height);
+    normalMap->setData(pixels);
 
     bakedNormal = bakeBuffer->getTexture();
     bakeBuffer->disable();
