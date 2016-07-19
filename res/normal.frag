@@ -17,8 +17,8 @@ uniform int arrayWidth;
 uniform int arrayHeight;
 
 #define EPSILON 0.0000001
- 
-float triangle_intersection(vec3 v1, vec3 v2, vec3 v3, vec3 ro, vec3 rd) {
+
+bool triangle_intersection(in vec3 v1, in vec3 v2, in vec3 v3, in vec3 ro, in vec3 rd, out vec3 hit) {
 	vec3 e1, e2;
 	vec3 P, Q, T;
 	float det, inv_det, u, v;
@@ -33,7 +33,7 @@ float triangle_intersection(vec3 v1, vec3 v2, vec3 v3, vec3 ro, vec3 rd) {
 	det = dot(e1, P);
 	// Not culling
 	if (det > -EPSILON && det < EPSILON) {
-		return -1;
+		return false;
 	}
 	inv_det = 1.0 / det;
 
@@ -44,7 +44,7 @@ float triangle_intersection(vec3 v1, vec3 v2, vec3 v3, vec3 ro, vec3 rd) {
 	u = dot(T, P) * inv_det;
 	// The intersection lies outside of the triangle
 	if (u < 0.0 || u > 1.0) {
-		return -1;
+		return false;
 	}
 
 	// Prepare to test v parameter
@@ -54,17 +54,18 @@ float triangle_intersection(vec3 v1, vec3 v2, vec3 v3, vec3 ro, vec3 rd) {
 	v = dot(rd, Q) * inv_det;
 	// The intersection lies outside of the triangle
 	if (v < 0.0 || u + v > 1.0) {
-		return -1;
+		return false;
 	}
 
 	t = dot(e2, Q) * inv_det;
 	
 	if (t > EPSILON) {
-		return t;
+        hit = vec3(u, v, t);
+		return true;
 	}
 	
 	// No intersection
-	return -1;
+	return false;
 }
 
 vec2 coord1Dto2D(float index, vec2 invSize) {
@@ -84,7 +85,8 @@ void main() {
 	vec3 normal = vec3(0, 0, 0);
 	
 	vec2 invSize = vec2(1.0 / arrayWidth, 1.0 / arrayHeight);
-	
+	vec3 hitInfo;
+    
 	for (int i = 0; i < arrayWidth * arrayHeight; i += 3) {
 		float i1 = texture(triList, coord1Dto2D(i + 0, invSize)).r;
 		float i2 = texture(triList, coord1Dto2D(i + 1, invSize)).r;
@@ -94,23 +96,28 @@ void main() {
 		vec3 v2 = texture(vertexList, coord1Dto2D(i2, invSize)).xyz;
 		vec3 v3 = texture(vertexList, coord1Dto2D(i3, invSize)).xyz;
 		
-		vec3 n1 = texture(normalList, coord1Dto2D(i1, invSize)).xyz;
-		vec3 n2 = texture(normalList, coord1Dto2D(i2, invSize)).xyz;
-		vec3 n3 = texture(normalList, coord1Dto2D(i3, invSize)).xyz;
-		
-		float t = triangle_intersection(v1, v2, v3, ro, rd);
-		if (t > 0) {
-			if (dot(n1, rd) <= 0) {
+		if (triangle_intersection(v1, v2, v3, ro, rd, hitInfo)) {
+        	vec3 n1 = texture(normalList, coord1Dto2D(i1, invSize)).xyz;
+            vec3 n2 = texture(normalList, coord1Dto2D(i2, invSize)).xyz;
+            vec3 n3 = texture(normalList, coord1Dto2D(i3, invSize)).xyz;
+        
+            float u = hitInfo.x;
+            float v = hitInfo.y;  
+            float w = 1 - (u + v);
+            vec3 n = n1 * w + n2 * u + n3 * v; 
+            
+            float t = hitInfo.z;
+			if (dot(n, rd) <= 0) {
 				if (t < closest) {
 					closest = t;
-					normal = n1;
+					normal = n;
 				}
 			}
 		}
 	}
 
-	normal = normalize(transpose(m) * normalize(normal));
-	normal = normal * 0.5 + 0.5;
+    normal = normalize(transpose(m) * normalize(normal));
+    normal = normal * 0.5 + 0.5;
 	
 	if (closest != 10000) {
 		out_Color = vec4(normal, 1);
