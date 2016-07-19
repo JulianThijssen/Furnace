@@ -54,7 +54,7 @@ void ViewWidget::setLowPoly(QString fileName) {
     lowPoly = ModelLoader::loadModel(fileName.toStdString().c_str(), true);
     debugNormals = ModelLoader::createDebugNormals(lowPoly->meshes[0], 0.1f);
 
-    cage = Cage::generateCage(lowPoly->meshes[0], 0.5f);
+    cage = Cage::generateCage(lowPoly->meshes[0], 0.05f);
     quad = ModelLoader::loadModel("res/Quad.obj", false);
 }
 
@@ -155,6 +155,16 @@ void ViewWidget::paintGL() {
 
         colorShader->bind();
         colorShader->uniformMatrix4f("modelMatrix", modelMatrix);
+        // Render cage
+        glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+        glBindVertexArray(cage->handle);
+        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, cage->faceVBO);
+        glDrawElements(GL_TRIANGLES, cage->indices.size(), GL_UNSIGNED_INT, 0);
+        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+        glBindVertexArray(0);
+        glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+
+        // Render normals
         glBindVertexArray(debugNormals);
         glDrawArrays(GL_LINES, 0, mesh.vertices.size() * 2);
         glBindVertexArray(0);
