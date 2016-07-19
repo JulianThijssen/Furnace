@@ -118,6 +118,7 @@ void main() {
 
     normal = normalize(transpose(m) * normalize(normal));
     normal = normal * 0.5 + 0.5;
+    normal.g = 1-normal.g;
     
     if (closest != 10000) {
         out_Color = vec4(normal, 1);
