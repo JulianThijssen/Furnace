@@ -17,11 +17,11 @@ out vec3 pass_bitangent;
 out vec3 pass_raydir;
 
 void main() {
-	pass_position = vec4(position, 1);
-	pass_texCoord = texCoord;
-	pass_normal = normal;
-	pass_tangent = tangent;
-	pass_bitangent = bitangent;
-	pass_raydir = raydir;
-	gl_Position = projMatrix * vec4(texCoord, 0, 1);
+    pass_position = vec4(position, 1);
+    pass_texCoord = texCoord;
+    pass_normal = normal;
+    pass_tangent = tangent;
+    pass_bitangent = bitangent;
+    pass_raydir = raydir;
+    gl_Position = projMatrix * vec4(texCoord, 0, 1);
 }

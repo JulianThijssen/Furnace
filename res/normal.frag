@@ -19,85 +19,85 @@ uniform int arrayHeight;
 #define EPSILON 0.0000001
 
 bool triangle_intersection(in vec3 v1, in vec3 v2, in vec3 v3, in vec3 ro, in vec3 rd, out vec3 hit) {
-	vec3 e1, e2;
-	vec3 P, Q, T;
-	float det, inv_det, u, v;
-	float t;
+    vec3 e1, e2;
+    vec3 P, Q, T;
+    float det, inv_det, u, v;
+    float t;
 
-	// Find vectors for two edges sharing v1
-	e1 = v2 - v1;
-	e2 = v3 - v1;
-	// Begin calculating determinant - also used to calculate u parameter
-	P = cross(rd, e2);
-	// If determinant is near zero, ray lies in plane of triangle
-	det = dot(e1, P);
-	// Not culling
-	if (det > -EPSILON && det < EPSILON) {
-		return false;
-	}
-	inv_det = 1.0 / det;
+    // Find vectors for two edges sharing v1
+    e1 = v2 - v1;
+    e2 = v3 - v1;
+    // Begin calculating determinant - also used to calculate u parameter
+    P = cross(rd, e2);
+    // If determinant is near zero, ray lies in plane of triangle
+    det = dot(e1, P);
+    // Not culling
+    if (det > -EPSILON && det < EPSILON) {
+        return false;
+    }
+    inv_det = 1.0 / det;
 
-	// Calculate distance from v1 to ray origin
-	T = ro - v1;
-	
-	// Calculate u parameter and test bound
-	u = dot(T, P) * inv_det;
-	// The intersection lies outside of the triangle
-	if (u < 0.0 || u > 1.0) {
-		return false;
-	}
+    // Calculate distance from v1 to ray origin
+    T = ro - v1;
+    
+    // Calculate u parameter and test bound
+    u = dot(T, P) * inv_det;
+    // The intersection lies outside of the triangle
+    if (u < 0.0 || u > 1.0) {
+        return false;
+    }
 
-	// Prepare to test v parameter
-	Q = cross(T, e1);
-	
-	// Calculate V parameter and test bound
-	v = dot(rd, Q) * inv_det;
-	// The intersection lies outside of the triangle
-	if (v < 0.0 || u + v > 1.0) {
-		return false;
-	}
+    // Prepare to test v parameter
+    Q = cross(T, e1);
+    
+    // Calculate V parameter and test bound
+    v = dot(rd, Q) * inv_det;
+    // The intersection lies outside of the triangle
+    if (v < 0.0 || u + v > 1.0) {
+        return false;
+    }
 
-	t = dot(e2, Q) * inv_det;
-	
-	if (t > EPSILON) {
+    t = dot(e2, Q) * inv_det;
+    
+    if (t > EPSILON) {
         hit = vec3(u, v, t);
-		return true;
-	}
-	
-	// No intersection
-	return false;
+        return true;
+    }
+    
+    // No intersection
+    return false;
 }
 
 vec2 coord1Dto2D(float index, vec2 invSize) {
-	float offset = index * invSize.x;
-	float x = fract(offset);
-	float y = (offset - x) * invSize.y;
-	return vec2(x, y);
+    float offset = index * invSize.x;
+    float x = fract(offset);
+    float y = (offset - x) * invSize.y;
+    return vec2(x, y);
 }
 
 void main() {
-	mat3 m = mat3(pass_tangent, pass_bitangent, pass_normal);
-	
-	vec3 ro = pass_position.xyz;
-	vec3 rd = pass_raydir.xyz;
-	
-	float closest = 10;
-	vec3 normal = vec3(0, 0, 0);
-	
-	vec2 invSize = vec2(1.0 / arrayWidth, 1.0 / arrayHeight);
-	vec3 hitInfo;
+    mat3 m = mat3(pass_tangent, pass_bitangent, pass_normal);
     
-	for (int i = 0; i < arrayWidth * arrayHeight; i += 3) {
-		float i1 = texture(triList, coord1Dto2D(i + 0, invSize)).r;
-		float i2 = texture(triList, coord1Dto2D(i + 1, invSize)).r;
-		float i3 = texture(triList, coord1Dto2D(i + 2, invSize)).r;
-		
-		vec3 v1 = texture(vertexList, coord1Dto2D(i1, invSize)).xyz;
-		vec3 v2 = texture(vertexList, coord1Dto2D(i2, invSize)).xyz;
-		vec3 v3 = texture(vertexList, coord1Dto2D(i3, invSize)).xyz;
-		
-		if (triangle_intersection(v1, v2, v3, ro, rd, hitInfo)) {
-        	vec3 n1 = texture(normalList, coord1Dto2D(i1, invSize)).xyz;
+    vec3 ro = pass_position.xyz;
+    vec3 rd = pass_raydir.xyz;
+    
+    float closest = 10;
+    vec3 normal = vec3(0, 0, 0);
+    
+    vec2 invSize = vec2(1.0 / arrayWidth, 1.0 / arrayHeight);
+    vec3 hitInfo;
+    
+    for (int i = 0; i < arrayWidth * arrayHeight; i += 3) {
+        float i1 = texture(triList, coord1Dto2D(i + 0, invSize)).r;
+        float i2 = texture(triList, coord1Dto2D(i + 1, invSize)).r;
+        float i3 = texture(triList, coord1Dto2D(i + 2, invSize)).r;
+        
+        vec3 v1 = texture(vertexList, coord1Dto2D(i1, invSize)).xyz;
+        vec3 v2 = texture(vertexList, coord1Dto2D(i2, invSize)).xyz;
+        vec3 v3 = texture(vertexList, coord1Dto2D(i3, invSize)).xyz;
+        
+        if (triangle_intersection(v1, v2, v3, ro, rd, hitInfo)) {
+            vec3 n1 = texture(normalList, coord1Dto2D(i1, invSize)).xyz;
             vec3 n2 = texture(normalList, coord1Dto2D(i2, invSize)).xyz;
             vec3 n3 = texture(normalList, coord1Dto2D(i3, invSize)).xyz;
         
@@ -107,28 +107,28 @@ void main() {
             vec3 n = n1 * w + n2 * u + n3 * v; 
             
             float t = hitInfo.z;
-			if (dot(n, rd) <= 0) {
-				if (t < closest) {
-					closest = t;
-					normal = n;
-				}
-			}
-		}
-	}
+            if (dot(n, rd) <= 0) {
+                if (t < closest) {
+                    closest = t;
+                    normal = n;
+                }
+            }
+        }
+    }
 
     normal = normalize(transpose(m) * normalize(normal));
     normal = normal * 0.5 + 0.5;
-	
-	if (closest != 10000) {
-		out_Color = vec4(normal, 1);
+    
+    if (closest != 10000) {
+        out_Color = vec4(normal, 1);
         return;
-	}
+    }
     
     //discard;
     
-	//out_Color = vec4(texture(normalList, pass_texCoord).rgb, 1);
-	//out_Color = vec4(color.rgb, 1);
-	
-	//out_Color = vec4(texture(triList, pass_texCoord));
-	out_Color = vec4(pass_texCoord, 0, 1);
+    //out_Color = vec4(texture(normalList, pass_texCoord).rgb, 1);
+    //out_Color = vec4(color.rgb, 1);
+    
+    //out_Color = vec4(texture(triList, pass_texCoord));
+    out_Color = vec4(pass_texCoord, 0, 1);
 }
