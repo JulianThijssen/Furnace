@@ -65,25 +65,33 @@ float Math::sqrt(const float f) {
 }
 
 float Math::min(const float f1, const float f2, const float f3) {
-    if (f1 <= f2 && f1 <= f3) {
-        return f1;
-    }
-    if (f2 <= f1 && f2 <= f3) {
-        return f2;
-    }
-    if (f3 <= f1 && f3 <= f2) {
-        return f3;
+    if (f1 <= f2) {
+        if (f1 <= f3) {
+            return f1;
+        } else {
+            return f3;
+        }
+    } else {
+        if (f2 <= f3) {
+            return f2;
+        } else {
+            return f3;
+        }
     }
 }
 
 float Math::max(const float f1, const float f2, const float f3) {
-    if (f1 >= f2 && f1 >= f3) {
-        return f1;
-    }
-    if (f2 >= f1 && f2 >= f3) {
-        return f2;
-    }
-    if (f3 >= f1 && f3 >= f2) {
-        return f3;
+    if (f1 >= f2) {
+        if (f1 >= f3) {
+            return f1;
+        } else {
+            return f3;
+        }
+    } else {
+        if (f2 >= f3) {
+            return f2;
+        } else {
+            return f3;
+        }
     }
 }

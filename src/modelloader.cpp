@@ -36,7 +36,7 @@ GLuint ModelLoader::createDebugNormals(Mesh& mesh, const float length) {
     for (int i = 0; i < mesh.vertices.size(); i++) {
         Vector3f v(mesh.vertices[i]);
         lines[i*2+0] = v;
-        lines[i*2+1] = v + Vector3f(mesh.normals[i]) * 0.1f;
+        lines[i*2+1] = v + Vector3f(mesh.normals[i]) * length;
     }
 
     GLuint normalVAO;

@@ -20,8 +20,8 @@ Vector3f Color::toVector(Color color) {
 }
 
 Color Color::fromVector(Vector3f vector) {
-    unsigned char r = (vector.x + 1) * 128;
-    unsigned char g = (vector.y + 1) * 128;
-    unsigned char b = (vector.z + 1) * 128;
+    unsigned char r = (unsigned char) ((vector.x + 1) * 128);
+    unsigned char g = (unsigned char) ((vector.y + 1) * 128);
+    unsigned char b = (unsigned char) ((vector.z + 1) * 128);
     return Color(r, g, b);
 }

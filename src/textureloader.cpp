@@ -7,7 +7,7 @@
 #include <QImage>
 #include <QDebug>
 
-GLuint TextureLoader::loadTexture(const char* path) {
+//GLuint TextureLoader::loadTexture(const char* path) {
 //    GLuint texture = SOIL_load_OGL_texture
 //        (
 //        path,
@@ -16,8 +16,8 @@ GLuint TextureLoader::loadTexture(const char* path) {
 //        SOIL_FLAG_MIPMAPS | SOIL_FLAG_INVERT_Y | SOIL_FLAG_NTSC_SAFE_RGB | SOIL_FLAG_COMPRESS_TO_DXT
 //        );
 
-    return 0;//return texture;
-}
+//    return 0;//return texture;
+//}
 
 QOpenGLTexture* TextureLoader::loadTextureTrue(const char* path) {
     QImage image = QImage(QString(path));

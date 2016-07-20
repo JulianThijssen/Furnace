@@ -9,11 +9,11 @@ Image::Image(int width, int height) {
     this->data = (unsigned char*) calloc(width * height * 4, sizeof(unsigned char));
 }
 
-int Image::getWidth() {
+unsigned int Image::getWidth() {
     return width;
 }
 
-int Image::getHeight() {
+unsigned int Image::getHeight() {
     return height;
 }
 

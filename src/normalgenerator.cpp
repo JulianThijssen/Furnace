@@ -13,7 +13,7 @@ Image NormalGenerator::getNormalMap(Mesh& mesh, int size) {
     Image image(size, size);
 
     for (int i = 0; i < mesh.indices.size(); i += 3) {
-        unsigned int index = mesh.indices[i];
+        //unsigned int index = mesh.indices[i];
 
         Vector3f v1 = mesh.vertices[mesh.indices[i + 0]];
         Vector3f v2 = mesh.vertices[mesh.indices[i + 1]];

@@ -169,7 +169,7 @@ void ViewWidget::paintGL() {
         // Render normals
         colorShader->uniform3f("color", 0, 1, 1);
         glBindVertexArray(debugNormals);
-        glDrawArrays(GL_LINES, 0, mesh.vertices.size() * 2);
+        glDrawArrays(GL_LINES, 0, (GLsizei) mesh.vertices.size() * 2);
         glBindVertexArray(0);
         colorShader->unbind();
     }
@@ -193,7 +193,7 @@ void ViewWidget::paintGL() {
         Mesh mesh = quad->meshes[0];
         glBindVertexArray(mesh.handle);
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mesh.faceVBO);
-        glDrawElements(GL_TRIANGLES, mesh.indices.size(), GL_UNSIGNED_INT, 0);
+        glDrawElements(GL_TRIANGLES, (GLsizei) mesh.indices.size(), GL_UNSIGNED_INT, 0);
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
         glBindVertexArray(0);
 
@@ -296,7 +296,7 @@ qDebug() << "Rendering normal..";
             normalShader->uniform1i("arrayWidth", aWidth);
             normalShader->uniform1i("arrayHeight", aHeight);
 
-            glDrawElements(GL_TRIANGLES, cage->indices.size(), GL_UNSIGNED_INT, 0);
+            glDrawElements(GL_TRIANGLES, (GLsizei) cage->indices.size(), GL_UNSIGNED_INT, 0);
 
             glFinish();
         }
