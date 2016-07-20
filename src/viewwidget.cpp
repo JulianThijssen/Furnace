@@ -160,6 +160,7 @@ void ViewWidget::paintGL() {
         colorShader->uniformMatrix4f("modelMatrix", modelMatrix);
         // Render cage
         colorShader->uniform3f("color", 1, 0.5f, 0);
+        glDisable(GL_CULL_FACE);
         glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
         glBindVertexArray(cage->handle);
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, cage->faceVBO);
@@ -167,6 +168,7 @@ void ViewWidget::paintGL() {
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
         glBindVertexArray(0);
         glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+        glEnable(GL_CULL_FACE);
 
         // Render normals
         colorShader->uniform3f("color", 0, 1, 1);
