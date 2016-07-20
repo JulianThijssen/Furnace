@@ -13,6 +13,8 @@ TEMPLATE = app
 
 INCLUDEPATH += 3rdparty/assimp/include
 
+RESOURCES = furnace.qrc
+
 SOURCES += src/main.cpp\
         src/mainwindow.cpp \
     src/viewwidget.cpp \

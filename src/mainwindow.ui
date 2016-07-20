@@ -10,8 +10,18 @@
     <height>600</height>
    </rect>
   </property>
+  <property name="cursor">
+   <cursorShape>ArrowCursor</cursorShape>
+  </property>
   <property name="windowTitle">
    <string>Furnace</string>
+  </property>
+  <property name="windowIcon">
+   <iconset resource="../furnace.qrc">
+    <normaloff>:/res/FurnaceIcon.ico</normaloff>:/res/FurnaceIcon.ico</iconset>
+  </property>
+  <property name="tabShape">
+   <enum>QTabWidget::Rounded</enum>
   </property>
   <widget class="QWidget" name="centralWidget">
    <widget class="ViewWidget" name="viewWidget">
@@ -105,6 +115,8 @@
    <header>viewwidget.h</header>
   </customwidget>
  </customwidgets>
- <resources/>
+ <resources>
+  <include location="../furnace.qrc"/>
+ </resources>
  <connections/>
 </ui>
