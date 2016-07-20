@@ -1,8 +1,6 @@
 #ifndef MESH_H
 #define MESH_H
 
-#include "Face.h"
-
 #include "util/vector3f.h"
 #include "util/vector2f.h"
 
@@ -18,7 +16,6 @@ public:
     std::vector<Vector3f> tangents;
     std::vector<Vector3f> bitangents;
     std::vector<Vector3f> raydirs;
-    std::vector<Face> faces;
 
     unsigned int handle;
     unsigned int numFaces;

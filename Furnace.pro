@@ -39,7 +39,6 @@ HEADERS  += src/mainwindow.h \
     src/mesh.h \
     src/util/vector3f.h \
     src/util/vector2f.h \
-    src/face.h \
     src/model.h \
     src/shaderloader.h \
     src/shader.h \

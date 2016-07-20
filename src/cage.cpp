@@ -96,7 +96,6 @@ Mesh* Cage::generateCage(const Mesh& mesh, const float offset) {
     Mesh* cage = new Mesh();
 
     cage->indices = mesh.indices;
-    cage->faces = mesh.faces;
     cage->texCoords = mesh.texCoords;
     cage->normals = mesh.normals;
     cage->tangents = mesh.tangents;
