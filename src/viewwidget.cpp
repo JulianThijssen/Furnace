@@ -149,24 +149,20 @@ void ViewWidget::paintGL() {
         diffuseShader->uniformMatrix4f("modelMatrix", modelMatrix);
 
         Mesh mesh = lowPoly->meshes[0];
-        glBindVertexArray(mesh.handle);
-        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mesh.faceVBO);
-        glDrawElements(GL_TRIANGLES, mesh.indices.size(), GL_UNSIGNED_INT, 0);
-        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
-        glBindVertexArray(0);
-
+        mesh.bind();
+        mesh.draw();
+        mesh.unbind();
 
         colorShader->bind();
         colorShader->uniformMatrix4f("modelMatrix", modelMatrix);
         // Render cage
         colorShader->uniform3f("color", 1, 0.5f, 0);
+
         glDisable(GL_CULL_FACE);
         glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-        glBindVertexArray(cage->handle);
-        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, cage->faceVBO);
-        glDrawElements(GL_TRIANGLES, cage->indices.size(), GL_UNSIGNED_INT, 0);
-        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
-        glBindVertexArray(0);
+        cage->bind();
+        cage->draw();
+        cage->unbind();
         glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
         glEnable(GL_CULL_FACE);
 

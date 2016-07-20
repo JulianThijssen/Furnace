@@ -19,6 +19,7 @@ SOURCES += src/main.cpp\
         src/mainwindow.cpp \
     src/viewwidget.cpp \
     src/modelloader.cpp \
+    src/mesh.cpp \
     src/util/vector3f.cpp \
     src/util/vector2f.cpp \
     src/shaderloader.cpp \

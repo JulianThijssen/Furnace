@@ -24,6 +24,10 @@ public:
     unsigned int numFaces;
     std::vector<unsigned int> indices;
     unsigned int faceVBO;
+
+    void bind();
+    void draw();
+    void unbind();
 };
 
 #endif // MESH_H
