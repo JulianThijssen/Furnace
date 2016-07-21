@@ -18,6 +18,12 @@ uniform int arrayHeight;
 
 #define EPSILON 0.0000001
 
+struct Ray
+{
+    vec3 o;
+    vec3 d;
+};
+
 struct Triangle
 {
     vec3 v0;
@@ -25,7 +31,7 @@ struct Triangle
     vec3 v2;
 };
 
-bool triangle_intersection(in Triangle tri, in vec3 ro, in vec3 rd, out vec3 hit) {
+bool triangle_intersection(in Triangle tri, in Ray ray, out vec3 hit) {
     vec3 e1, e2;
     vec3 P, Q, T;
     float det, inv_det, u, v;
@@ -35,7 +41,7 @@ bool triangle_intersection(in Triangle tri, in vec3 ro, in vec3 rd, out vec3 hit
     e1 = tri.v1 - tri.v0;
     e2 = tri.v2 - tri.v0;
     // Begin calculating determinant - also used to calculate u parameter
-    P = cross(rd, e2);
+    P = cross(ray.d, e2);
     // If determinant is near zero, ray lies in plane of triangle
     det = dot(e1, P);
     // Not culling
@@ -45,7 +51,7 @@ bool triangle_intersection(in Triangle tri, in vec3 ro, in vec3 rd, out vec3 hit
     inv_det = 1.0 / det;
 
     // Calculate distance from v1 to ray origin
-    T = ro - tri.v0;
+    T = ray.o - tri.v0;
     
     // Calculate u parameter and test bound
     u = dot(T, P) * inv_det;
@@ -58,7 +64,7 @@ bool triangle_intersection(in Triangle tri, in vec3 ro, in vec3 rd, out vec3 hit
     Q = cross(T, e1);
     
     // Calculate V parameter and test bound
-    v = dot(rd, Q) * inv_det;
+    v = dot(ray.d, Q) * inv_det;
     // The intersection lies outside of the triangle
     if (v < 0.0 || u + v > 1.0) {
         return false;
@@ -85,8 +91,9 @@ vec2 coord1Dto2D(float index, vec2 invSize) {
 void main() {
     mat3 m = mat3(pass_tangent, pass_bitangent, pass_normal);
     
-    vec3 ro = pass_position.xyz;
-    vec3 rd = pass_raydir.xyz;
+    Ray ray;
+    ray.o = pass_position.xyz;
+    ray.d = pass_raydir.xyz;
     
     float closest = 10;
     vec3 normal = vec3(0, 0, 0);
@@ -104,7 +111,7 @@ void main() {
         tri.v1 = texture(vertexList, coord1Dto2D(i2, invSize)).xyz;
         tri.v2 = texture(vertexList, coord1Dto2D(i3, invSize)).xyz;
         
-        if (triangle_intersection(tri, ro, rd, hitInfo)) {
+        if (triangle_intersection(tri, ray, hitInfo)) {
             vec3 n1 = texture(normalList, coord1Dto2D(i1, invSize)).xyz;
             vec3 n2 = texture(normalList, coord1Dto2D(i2, invSize)).xyz;
             vec3 n3 = texture(normalList, coord1Dto2D(i3, invSize)).xyz;
@@ -115,7 +122,7 @@ void main() {
             vec3 n = n1 * w + n2 * u + n3 * v; 
             
             float t = hitInfo.z;
-            if (dot(n, rd) <= 0) {
+            if (dot(n, ray.d) <= 0) {
                 if (t < closest) {
                     closest = t;
                     normal = n;
