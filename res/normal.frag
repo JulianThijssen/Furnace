@@ -18,15 +18,22 @@ uniform int arrayHeight;
 
 #define EPSILON 0.0000001
 
-bool triangle_intersection(in vec3 v1, in vec3 v2, in vec3 v3, in vec3 ro, in vec3 rd, out vec3 hit) {
+struct Triangle
+{
+    vec3 v0;
+    vec3 v1;
+    vec3 v2;
+};
+
+bool triangle_intersection(in Triangle tri, in vec3 ro, in vec3 rd, out vec3 hit) {
     vec3 e1, e2;
     vec3 P, Q, T;
     float det, inv_det, u, v;
     float t;
 
     // Find vectors for two edges sharing v1
-    e1 = v2 - v1;
-    e2 = v3 - v1;
+    e1 = tri.v1 - tri.v0;
+    e2 = tri.v2 - tri.v0;
     // Begin calculating determinant - also used to calculate u parameter
     P = cross(rd, e2);
     // If determinant is near zero, ray lies in plane of triangle
@@ -38,7 +45,7 @@ bool triangle_intersection(in vec3 v1, in vec3 v2, in vec3 v3, in vec3 ro, in ve
     inv_det = 1.0 / det;
 
     // Calculate distance from v1 to ray origin
-    T = ro - v1;
+    T = ro - tri.v0;
     
     // Calculate u parameter and test bound
     u = dot(T, P) * inv_det;
@@ -86,17 +93,18 @@ void main() {
     
     vec2 invSize = vec2(1.0 / arrayWidth, 1.0 / arrayHeight);
     vec3 hitInfo;
+    Triangle tri;
     
     for (int i = 0; i < arrayWidth * arrayHeight; i += 3) {
         float i1 = texture(triList, coord1Dto2D(i + 0, invSize)).r;
         float i2 = texture(triList, coord1Dto2D(i + 1, invSize)).r;
         float i3 = texture(triList, coord1Dto2D(i + 2, invSize)).r;
         
-        vec3 v1 = texture(vertexList, coord1Dto2D(i1, invSize)).xyz;
-        vec3 v2 = texture(vertexList, coord1Dto2D(i2, invSize)).xyz;
-        vec3 v3 = texture(vertexList, coord1Dto2D(i3, invSize)).xyz;
+        tri.v0 = texture(vertexList, coord1Dto2D(i1, invSize)).xyz;
+        tri.v1 = texture(vertexList, coord1Dto2D(i2, invSize)).xyz;
+        tri.v2 = texture(vertexList, coord1Dto2D(i3, invSize)).xyz;
         
-        if (triangle_intersection(v1, v2, v3, ro, rd, hitInfo)) {
+        if (triangle_intersection(tri, ro, rd, hitInfo)) {
             vec3 n1 = texture(normalList, coord1Dto2D(i1, invSize)).xyz;
             vec3 n2 = texture(normalList, coord1Dto2D(i2, invSize)).xyz;
             vec3 n3 = texture(normalList, coord1Dto2D(i3, invSize)).xyz;
