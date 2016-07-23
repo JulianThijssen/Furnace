@@ -1,5 +1,8 @@
 <!DOCTYPE RCC><RCC version="1.0">
 <qresource>
+    <file>res/FurnaceLogo.png</file>
     <file>res/FurnaceIcon.ico</file>
+    <file>res/FurnaceButton.png</file>
+    <file>res/FurnaceButtonClicked.png</file>
 </qresource>
 </RCC>

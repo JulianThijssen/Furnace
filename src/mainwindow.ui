@@ -20,90 +20,340 @@
    <iconset resource="../furnace.qrc">
     <normaloff>:/res/FurnaceIcon.ico</normaloff>:/res/FurnaceIcon.ico</iconset>
   </property>
+  <property name="styleSheet">
+   <string notr="true">background-color: rgb(45, 54, 62);</string>
+  </property>
   <property name="tabShape">
    <enum>QTabWidget::Rounded</enum>
+  </property>
+  <property name="unifiedTitleAndToolBarOnMac">
+   <bool>false</bool>
   </property>
   <widget class="QWidget" name="centralWidget">
    <widget class="ViewWidget" name="viewWidget">
     <property name="geometry">
      <rect>
-      <x>20</x>
-      <y>60</y>
-      <width>761</width>
-      <height>471</height>
+      <x>190</x>
+      <y>180</y>
+      <width>600</width>
+      <height>400</height>
      </rect>
     </property>
    </widget>
    <widget class="QPushButton" name="importLowButton">
     <property name="geometry">
      <rect>
-      <x>20</x>
-      <y>10</y>
-      <width>101</width>
-      <height>31</height>
+      <x>0</x>
+      <y>80</y>
+      <width>100</width>
+      <height>40</height>
      </rect>
     </property>
+    <property name="sizePolicy">
+     <sizepolicy hsizetype="Maximum" vsizetype="Maximum">
+      <horstretch>0</horstretch>
+      <verstretch>0</verstretch>
+     </sizepolicy>
+    </property>
+    <property name="minimumSize">
+     <size>
+      <width>100</width>
+      <height>40</height>
+     </size>
+    </property>
+    <property name="maximumSize">
+     <size>
+      <width>100</width>
+      <height>40</height>
+     </size>
+    </property>
+    <property name="autoFillBackground">
+     <bool>false</bool>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QPushButton {
+	background-color: rgb(62, 71, 80);
+	border-color: rgb(68, 80, 85);
+	border-style: solid;
+	border-width: 0px 1px 0px 0px;
+	color: rgb(122, 122, 122);
+	font: 75 8pt &quot;Trebuchet MS&quot;;
+	font-weight: bold;
+}
+QPushButton:hover:!pressed {
+	border-bottom: 4px solid #39B4FF;
+	padding-top: 1px;
+}
+</string>
+    </property>
     <property name="text">
-     <string>Import LowPoly</string>
+     <string>LOWPOLY</string>
+    </property>
+    <property name="autoDefault">
+     <bool>false</bool>
+    </property>
+    <property name="default">
+     <bool>false</bool>
+    </property>
+    <property name="flat">
+     <bool>false</bool>
     </property>
    </widget>
    <widget class="QPushButton" name="importHighButton">
     <property name="geometry">
      <rect>
-      <x>140</x>
-      <y>10</y>
-      <width>101</width>
-      <height>31</height>
+      <x>100</x>
+      <y>80</y>
+      <width>100</width>
+      <height>40</height>
      </rect>
     </property>
+    <property name="sizePolicy">
+     <sizepolicy hsizetype="Maximum" vsizetype="Maximum">
+      <horstretch>0</horstretch>
+      <verstretch>0</verstretch>
+     </sizepolicy>
+    </property>
+    <property name="minimumSize">
+     <size>
+      <width>100</width>
+      <height>40</height>
+     </size>
+    </property>
+    <property name="maximumSize">
+     <size>
+      <width>100</width>
+      <height>40</height>
+     </size>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QPushButton {
+	background-color: rgb(62, 71, 80);
+	border-color: rgb(68, 80, 85);
+	border-style: solid;
+	border-width: 0px 1px 0px 0px;
+	color: rgb(122, 122, 122);
+	font: 75 8pt &quot;Trebuchet MS&quot;;
+	font-weight: bold;
+}
+QPushButton:hover:!pressed {
+	border-bottom: 4px solid #39B4FF;
+	padding-top: 1px;
+}
+</string>
+    </property>
     <property name="text">
-     <string>Import HighPoly</string>
+     <string>HIGHPOLY</string>
     </property>
    </widget>
    <widget class="QPushButton" name="bakeNormalButton">
     <property name="geometry">
      <rect>
-      <x>260</x>
-      <y>10</y>
-      <width>101</width>
-      <height>31</height>
+      <x>200</x>
+      <y>80</y>
+      <width>100</width>
+      <height>40</height>
      </rect>
     </property>
+    <property name="sizePolicy">
+     <sizepolicy hsizetype="Maximum" vsizetype="Maximum">
+      <horstretch>0</horstretch>
+      <verstretch>0</verstretch>
+     </sizepolicy>
+    </property>
+    <property name="minimumSize">
+     <size>
+      <width>100</width>
+      <height>40</height>
+     </size>
+    </property>
+    <property name="maximumSize">
+     <size>
+      <width>100</width>
+      <height>40</height>
+     </size>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QPushButton {
+	background-color: rgb(62, 71, 80);
+	border-color: rgb(68, 80, 85);
+	border-style: solid;
+	border-width: 0px 1px 0px 0px;
+	color: rgb(122, 122, 122);
+	font: 75 8pt &quot;Trebuchet MS&quot;;
+	font-weight: bold;
+}
+QPushButton:hover:!pressed {
+	border-bottom: 4px solid #39B4FF;
+	padding-top: 4px;
+}
+</string>
+    </property>
     <property name="text">
-     <string>Bake NormalMap</string>
+     <string>BAKE</string>
+    </property>
+    <property name="icon">
+     <iconset resource="../furnace.qrc">
+      <normaloff>:/res/FurnaceButton.png</normaloff>
+      <normalon>:/res/FurnaceButtonClicked.png</normalon>:/res/FurnaceButton.png</iconset>
+    </property>
+    <property name="iconSize">
+     <size>
+      <width>16</width>
+      <height>16</height>
+     </size>
+    </property>
+    <property name="checkable">
+     <bool>false</bool>
+    </property>
+    <property name="checked">
+     <bool>false</bool>
+    </property>
+    <property name="flat">
+     <bool>false</bool>
     </property>
    </widget>
    <widget class="QPushButton" name="exportNormalButton">
     <property name="geometry">
      <rect>
-      <x>380</x>
-      <y>10</y>
-      <width>101</width>
-      <height>31</height>
+      <x>300</x>
+      <y>80</y>
+      <width>100</width>
+      <height>40</height>
      </rect>
     </property>
+    <property name="sizePolicy">
+     <sizepolicy hsizetype="Maximum" vsizetype="Maximum">
+      <horstretch>0</horstretch>
+      <verstretch>0</verstretch>
+     </sizepolicy>
+    </property>
+    <property name="minimumSize">
+     <size>
+      <width>100</width>
+      <height>40</height>
+     </size>
+    </property>
+    <property name="maximumSize">
+     <size>
+      <width>100</width>
+      <height>40</height>
+     </size>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QPushButton {
+	background-color: rgb(62, 71, 80);
+	border-color: rgb(68, 80, 85);
+	border-style: solid;
+	border-width: 0px 1px 0px 0px;
+	color: rgb(122, 122, 122);
+	font: 75 8pt &quot;Trebuchet MS&quot;;
+	font-weight: bold;
+}
+QPushButton:hover:!pressed {
+	border-bottom: 4px solid #39B4FF;
+	padding-top: 1px;
+}
+</string>
+    </property>
     <property name="text">
-     <string>Export NormalMap</string>
+     <string>EXPORT</string>
     </property>
    </widget>
-  </widget>
-  <widget class="QMenuBar" name="menuBar">
-   <property name="geometry">
-    <rect>
-     <x>0</x>
-     <y>0</y>
-     <width>800</width>
-     <height>21</height>
-    </rect>
-   </property>
-  </widget>
-  <widget class="QToolBar" name="mainToolBar">
-   <attribute name="toolBarArea">
-    <enum>TopToolBarArea</enum>
-   </attribute>
-   <attribute name="toolBarBreak">
-    <bool>false</bool>
-   </attribute>
+   <widget class="QWidget" name="menuBar" native="true">
+    <property name="enabled">
+     <bool>true</bool>
+    </property>
+    <property name="geometry">
+     <rect>
+      <x>0</x>
+      <y>0</y>
+      <width>800</width>
+      <height>80</height>
+     </rect>
+    </property>
+    <property name="sizePolicy">
+     <sizepolicy hsizetype="Maximum" vsizetype="Maximum">
+      <horstretch>0</horstretch>
+      <verstretch>0</verstretch>
+     </sizepolicy>
+    </property>
+    <property name="minimumSize">
+     <size>
+      <width>800</width>
+      <height>80</height>
+     </size>
+    </property>
+    <property name="maximumSize">
+     <size>
+      <width>800</width>
+      <height>80</height>
+     </size>
+    </property>
+    <property name="autoFillBackground">
+     <bool>false</bool>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: rgb(30, 37, 43);</string>
+    </property>
+    <widget class="QWidget" name="Logo" native="true">
+     <property name="geometry">
+      <rect>
+       <x>20</x>
+       <y>10</y>
+       <width>200</width>
+       <height>60</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">image: url(:/res/FurnaceLogo.png);</string>
+     </property>
+    </widget>
+   </widget>
+   <widget class="QWidget" name="toolBar" native="true">
+    <property name="enabled">
+     <bool>true</bool>
+    </property>
+    <property name="geometry">
+     <rect>
+      <x>0</x>
+      <y>80</y>
+      <width>800</width>
+      <height>40</height>
+     </rect>
+    </property>
+    <property name="sizePolicy">
+     <sizepolicy hsizetype="Maximum" vsizetype="Maximum">
+      <horstretch>0</horstretch>
+      <verstretch>0</verstretch>
+     </sizepolicy>
+    </property>
+    <property name="minimumSize">
+     <size>
+      <width>800</width>
+      <height>40</height>
+     </size>
+    </property>
+    <property name="maximumSize">
+     <size>
+      <width>800</width>
+      <height>40</height>
+     </size>
+    </property>
+    <property name="autoFillBackground">
+     <bool>false</bool>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: rgb(62, 71, 80);</string>
+    </property>
+   </widget>
+   <zorder>menuBar</zorder>
+   <zorder>toolBar</zorder>
+   <zorder>viewWidget</zorder>
+   <zorder>bakeNormalButton</zorder>
+   <zorder>exportNormalButton</zorder>
+   <zorder>importHighButton</zorder>
+   <zorder>importLowButton</zorder>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
  </widget>
