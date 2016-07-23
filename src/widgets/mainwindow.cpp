@@ -1,8 +1,8 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
-#include "modelloader.h"
-#include "model.h"
+#include "../modelloader.h"
+#include "../model.h"
 
 #include <QFileDialog>
 #include <QDebug>

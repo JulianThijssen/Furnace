@@ -260,7 +260,7 @@ QPushButton:hover:!pressed {
      <string>EXPORT</string>
     </property>
    </widget>
-   <widget class="QWidget" name="menuBar" native="true">
+   <widget class="TitleBar" name="titleBar" native="true">
     <property name="enabled">
      <bool>true</bool>
     </property>
@@ -296,7 +296,7 @@ QPushButton:hover:!pressed {
     <property name="styleSheet">
      <string notr="true">background-color: rgb(30, 37, 43);</string>
     </property>
-    <widget class="QWidget" name="Logo" native="true">
+    <widget class="QWidget" name="logo" native="true">
      <property name="geometry">
       <rect>
        <x>20</x>
@@ -347,7 +347,7 @@ QPushButton:hover:!pressed {
      <string notr="true">background-color: rgb(62, 71, 80);</string>
     </property>
    </widget>
-   <zorder>menuBar</zorder>
+   <zorder>titleBar</zorder>
    <zorder>toolBar</zorder>
    <zorder>viewWidget</zorder>
    <zorder>bakeNormalButton</zorder>
@@ -363,6 +363,12 @@ QPushButton:hover:!pressed {
    <class>ViewWidget</class>
    <extends>QOpenGLWidget</extends>
    <header>viewwidget.h</header>
+  </customwidget>
+  <customwidget>
+   <class>TitleBar</class>
+   <extends>QWidget</extends>
+   <header>titlebar.h</header>
+   <container>1</container>
   </customwidget>
  </customwidgets>
  <resources>

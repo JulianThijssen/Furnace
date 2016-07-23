@@ -10,11 +10,11 @@
 #include <QString>
 #include <QTimer>
 
-#include "framebuffer.h"
-#include "model.h"
-#include "shader.h"
-#include "image.h"
-#include "util/matrix4f.h"
+#include "../framebuffer.h"
+#include "../model.h"
+#include "../shader.h"
+#include "../image.h"
+#include "../util/matrix4f.h"
 
 class ViewWidget : public QOpenGLWidget, protected QOpenGLFunctions_3_2_Core
 {

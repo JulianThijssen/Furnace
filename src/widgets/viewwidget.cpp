@@ -1,13 +1,13 @@
 #include "viewwidget.h"
 
-#include "shaderloader.h"
-#include "modelloader.h"
-#include "textureloader.h"
-#include "model.h"
-#include "mesh.h"
-#include "cage.h"
-#include "image.h"
-#include "util/math.h"
+#include "../shaderloader.h"
+#include "../modelloader.h"
+#include "../textureloader.h"
+#include "../model.h"
+#include "../mesh.h"
+#include "../cage.h"
+#include "../image.h"
+#include "../util/math.h"
 #include <vector>
 #include <ctime>
 
@@ -265,8 +265,7 @@ qDebug() << "Rendering normal..";
 
     Matrix4f projMatrix;
 
-    glBindVertexArray(cage->handle);
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, cage->faceVBO);
+    cage->bind();
 
     for (unsigned int x = 0; x < TILES; x++) {
         for (unsigned int y = 0; y < TILES; y++) {
@@ -302,8 +301,7 @@ qDebug() << "Rendering normal..";
         }
     }
 
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
-    glBindVertexArray(0);
+    cage->unbind();
 
     unsigned char *pixels = new unsigned char[width * height * 4];
     glReadPixels(0, 0, width, height, GL_RGBA, GL_UNSIGNED_BYTE, pixels);

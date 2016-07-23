@@ -16,8 +16,8 @@ INCLUDEPATH += 3rdparty/assimp/include
 RESOURCES = furnace.qrc
 
 SOURCES += src/main.cpp\
-        src/mainwindow.cpp \
-    src/viewwidget.cpp \
+        src/widgets/mainwindow.cpp \
+    src/widgets/viewwidget.cpp \
     src/modelloader.cpp \
     src/mesh.cpp \
     src/util/vector3f.cpp \
@@ -31,10 +31,11 @@ SOURCES += src/main.cpp\
     src/textureloader.cpp \
     src/util/math.cpp \
     src/cage.cpp \
-    src/framebuffer.cpp
+    src/framebuffer.cpp \
+    src/widgets/titlebar.cpp
 
-HEADERS  += src/mainwindow.h \
-    src/viewwidget.h \
+HEADERS  += src/widgets/mainwindow.h \
+    src/widgets/viewwidget.h \
     src/modelloader.h \
     src/mesh.h \
     src/util/vector3f.h \
@@ -49,7 +50,8 @@ HEADERS  += src/mainwindow.h \
     src/textureloader.h \
     src/util/math.h \
     src/cage.h \
-    src/framebuffer.h
+    src/framebuffer.h \
+    src/widgets/titlebar.h
 
 FORMS    += src/mainwindow.ui
 
