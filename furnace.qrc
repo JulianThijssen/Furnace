@@ -6,5 +6,6 @@
     <file>res/FurnaceButtonClicked.png</file>
     <file>res/CloseButton.png</file>
     <file>res/ModelViewButton.png</file>
+    <file>res/NormalViewButton.png</file>
 </qresource>
 </RCC>

@@ -426,7 +426,7 @@ QPushButton:hover:!pressed {
 	background-color: #2D363E;
 	border-color: rgb(230, 230, 230);
 	border-style: solid;
-	border-width: 0px 1px 0px 0px;
+	border-width: 0px 0px 0px 0px;
 }
 QPushButton:hover:!pressed {
 	border-left: 4px solid #39B4FF;
@@ -448,6 +448,60 @@ QPushButton:hover:!pressed {
      </size>
     </property>
    </widget>
+   <widget class="QPushButton" name="normalViewButton">
+    <property name="geometry">
+     <rect>
+      <x>0</x>
+      <y>180</y>
+      <width>64</width>
+      <height>64</height>
+     </rect>
+    </property>
+    <property name="sizePolicy">
+     <sizepolicy hsizetype="Maximum" vsizetype="Maximum">
+      <horstretch>0</horstretch>
+      <verstretch>0</verstretch>
+     </sizepolicy>
+    </property>
+    <property name="minimumSize">
+     <size>
+      <width>64</width>
+      <height>64</height>
+     </size>
+    </property>
+    <property name="maximumSize">
+     <size>
+      <width>64</width>
+      <height>64</height>
+     </size>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QPushButton {
+	background-color: #2D363E;
+	border-color: rgb(230, 230, 230);
+	border-style: solid;
+	border-width: 0px 0px 0px 0px;
+}
+QPushButton:hover:!pressed {
+	border-left: 4px solid #39B4FF;
+	padding-right: 2px;
+}
+</string>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="icon">
+     <iconset resource="../furnace.qrc">
+      <normaloff>:/res/NormalViewButton.png</normaloff>:/res/NormalViewButton.png</iconset>
+    </property>
+    <property name="iconSize">
+     <size>
+      <width>32</width>
+      <height>32</height>
+     </size>
+    </property>
+   </widget>
    <zorder>titleBar</zorder>
    <zorder>toolBar</zorder>
    <zorder>viewWidget</zorder>
@@ -456,6 +510,7 @@ QPushButton:hover:!pressed {
    <zorder>importHighButton</zorder>
    <zorder>importLowButton</zorder>
    <zorder>modelViewButton</zorder>
+   <zorder>normalViewButton</zorder>
   </widget>
   <widget class="QStatusBar" name="statusBar">
    <property name="enabled">

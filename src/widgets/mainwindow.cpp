@@ -79,3 +79,8 @@ void MainWindow::on_modelViewButton_clicked()
 {
 
 }
+
+void MainWindow::on_normalViewButton_clicked()
+{
+
+}
