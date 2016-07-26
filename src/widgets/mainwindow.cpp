@@ -75,12 +75,12 @@ void MainWindow::on_closeButton_clicked()
     QApplication::quit();
 }
 
-void MainWindow::on_modelViewButton_clicked()
+void MainWindow::on_modelViewButton_pressed()
 {
-
+    ui->normalViewButton->setChecked(false);
 }
 
-void MainWindow::on_normalViewButton_clicked()
+void MainWindow::on_normalViewButton_pressed()
 {
-
+    ui->modelViewButton->setChecked(false);
 }
