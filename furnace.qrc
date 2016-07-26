@@ -4,5 +4,6 @@
     <file>res/FurnaceIcon.ico</file>
     <file>res/FurnaceButton.png</file>
     <file>res/FurnaceButtonClicked.png</file>
+    <file>res/CloseButton.png</file>
 </qresource>
 </RCC>

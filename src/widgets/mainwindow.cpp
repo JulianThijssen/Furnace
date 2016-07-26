@@ -69,3 +69,8 @@ void MainWindow::on_exportNormalButton_clicked()
     qDebug() << fileName;
     ui->viewWidget->save(fileName);
 }
+
+void MainWindow::on_closeButton_clicked()
+{
+    QApplication::quit();
+}
