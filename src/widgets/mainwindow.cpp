@@ -74,3 +74,8 @@ void MainWindow::on_closeButton_clicked()
 {
     QApplication::quit();
 }
+
+void MainWindow::on_modelViewButton_clicked()
+{
+
+}

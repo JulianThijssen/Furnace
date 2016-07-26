@@ -21,7 +21,7 @@
     <normaloff>:/res/FurnaceIcon.ico</normaloff>:/res/FurnaceIcon.ico</iconset>
   </property>
   <property name="styleSheet">
-   <string notr="true">background-color: rgb(45, 54, 62);</string>
+   <string notr="true">background-color: rgb(16, 21, 26);</string>
   </property>
   <property name="tabShape">
    <enum>QTabWidget::Rounded</enum>
@@ -33,10 +33,10 @@
    <widget class="ViewWidget" name="viewWidget">
     <property name="geometry">
      <rect>
-      <x>190</x>
-      <y>180</y>
-      <width>600</width>
-      <height>400</height>
+      <x>160</x>
+      <y>120</y>
+      <width>640</width>
+      <height>448</height>
      </rect>
     </property>
    </widget>
@@ -336,6 +336,18 @@ QPushButton:hover:!pressed {
        <height>40</height>
       </size>
      </property>
+     <property name="styleSheet">
+      <string notr="true">QPushButton {
+	background-color: rgb(62, 71, 80);
+	border-color: rgb(230, 230, 230);
+	border-style: solid;
+	border-width: 0px 0px 1px 1px;
+}
+QPushButton:hover:!pressed {
+	background-color: #39B4FF;
+}
+</string>
+     </property>
      <property name="text">
       <string/>
      </property>
@@ -382,6 +394,60 @@ QPushButton:hover:!pressed {
      <string notr="true">background-color: rgb(62, 71, 80);</string>
     </property>
    </widget>
+   <widget class="QPushButton" name="modelViewButton">
+    <property name="geometry">
+     <rect>
+      <x>0</x>
+      <y>120</y>
+      <width>64</width>
+      <height>64</height>
+     </rect>
+    </property>
+    <property name="sizePolicy">
+     <sizepolicy hsizetype="Maximum" vsizetype="Maximum">
+      <horstretch>0</horstretch>
+      <verstretch>0</verstretch>
+     </sizepolicy>
+    </property>
+    <property name="minimumSize">
+     <size>
+      <width>64</width>
+      <height>64</height>
+     </size>
+    </property>
+    <property name="maximumSize">
+     <size>
+      <width>64</width>
+      <height>64</height>
+     </size>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QPushButton {
+	background-color: #2D363E;
+	border-color: rgb(230, 230, 230);
+	border-style: solid;
+	border-width: 0px 1px 0px 0px;
+}
+QPushButton:hover:!pressed {
+	border-left: 4px solid #39B4FF;
+	padding-right: 2px;
+}
+</string>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="icon">
+     <iconset resource="../furnace.qrc">
+      <normaloff>:/res/ModelViewButton.png</normaloff>:/res/ModelViewButton.png</iconset>
+    </property>
+    <property name="iconSize">
+     <size>
+      <width>32</width>
+      <height>32</height>
+     </size>
+    </property>
+   </widget>
    <zorder>titleBar</zorder>
    <zorder>toolBar</zorder>
    <zorder>viewWidget</zorder>
@@ -389,8 +455,19 @@ QPushButton:hover:!pressed {
    <zorder>exportNormalButton</zorder>
    <zorder>importHighButton</zorder>
    <zorder>importLowButton</zorder>
+   <zorder>modelViewButton</zorder>
   </widget>
-  <widget class="QStatusBar" name="statusBar"/>
+  <widget class="QStatusBar" name="statusBar">
+   <property name="enabled">
+    <bool>true</bool>
+   </property>
+   <property name="minimumSize">
+    <size>
+     <width>0</width>
+     <height>32</height>
+    </size>
+   </property>
+  </widget>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <customwidgets>

@@ -26,6 +26,8 @@ private slots:
 
     void on_closeButton_clicked();
 
+    void on_modelViewButton_clicked();
+
 private:
     Ui::MainWindow *ui;
 };
