@@ -10,6 +10,24 @@
     <height>600</height>
    </rect>
   </property>
+  <property name="sizePolicy">
+   <sizepolicy hsizetype="Maximum" vsizetype="Maximum">
+    <horstretch>0</horstretch>
+    <verstretch>0</verstretch>
+   </sizepolicy>
+  </property>
+  <property name="minimumSize">
+   <size>
+    <width>800</width>
+    <height>600</height>
+   </size>
+  </property>
+  <property name="maximumSize">
+   <size>
+    <width>800</width>
+    <height>600</height>
+   </size>
+  </property>
   <property name="cursor">
    <cursorShape>ArrowCursor</cursorShape>
   </property>
@@ -33,10 +51,10 @@
    <widget class="ViewWidget" name="viewWidget">
     <property name="geometry">
      <rect>
-      <x>160</x>
+      <x>350</x>
       <y>120</y>
-      <width>640</width>
-      <height>448</height>
+      <width>450</width>
+      <height>450</height>
      </rect>
     </property>
    </widget>
@@ -81,7 +99,7 @@
 	font-weight: bold;
 }
 QPushButton:hover:!pressed {
-	border-bottom: 4px solid #39B4FF;
+	border-bottom: 4px solid #DE2B41;
 	padding-top: 1px;
 }
 </string>
@@ -137,7 +155,7 @@ QPushButton:hover:!pressed {
 	font-weight: bold;
 }
 QPushButton:hover:!pressed {
-	border-bottom: 4px solid #39B4FF;
+	border-bottom: 4px solid #DE2B41;
 	padding-top: 1px;
 }
 </string>
@@ -184,7 +202,7 @@ QPushButton:hover:!pressed {
 	font-weight: bold;
 }
 QPushButton:hover:!pressed {
-	border-bottom: 4px solid #39B4FF;
+	border-bottom: 4px solid #DE2B41;
 	padding-top: 4px;
 }
 </string>
@@ -251,7 +269,7 @@ QPushButton:hover:!pressed {
 	font-weight: bold;
 }
 QPushButton:hover:!pressed {
-	border-bottom: 4px solid #39B4FF;
+	border-bottom: 4px solid #DE2B41;
 	padding-top: 1px;
 }
 </string>
@@ -339,12 +357,11 @@ QPushButton:hover:!pressed {
      <property name="styleSheet">
       <string notr="true">QPushButton {
 	background-color: rgb(62, 71, 80);
-	border-color: rgb(230, 230, 230);
 	border-style: solid;
-	border-width: 0px 0px 1px 1px;
+	border-width: 0px;
 }
 QPushButton:hover:!pressed {
-	background-color: #39B4FF;
+	background-color: #DE2B41;
 }
 </string>
      </property>
@@ -399,8 +416,8 @@ QPushButton:hover:!pressed {
      <rect>
       <x>0</x>
       <y>120</y>
-      <width>64</width>
-      <height>64</height>
+      <width>60</width>
+      <height>60</height>
      </rect>
     </property>
     <property name="sizePolicy">
@@ -411,14 +428,14 @@ QPushButton:hover:!pressed {
     </property>
     <property name="minimumSize">
      <size>
-      <width>64</width>
-      <height>64</height>
+      <width>60</width>
+      <height>60</height>
      </size>
     </property>
     <property name="maximumSize">
      <size>
-      <width>64</width>
-      <height>64</height>
+      <width>60</width>
+      <height>60</height>
      </size>
     </property>
     <property name="styleSheet">
@@ -428,9 +445,11 @@ QPushButton:hover:!pressed {
 	border-style: solid;
 	border-width: 0px 0px 0px 0px;
 }
-QPushButton:hover:!pressed {
-	border-left: 4px solid #39B4FF;
-	padding-right: 2px;
+QPushButton:hover {
+	background-color: #DE2B41;
+}
+QPushButton:checked {
+	background-color: #DE2B41;
 }
 </string>
     </property>
@@ -447,14 +466,20 @@ QPushButton:hover:!pressed {
       <height>32</height>
      </size>
     </property>
+    <property name="checkable">
+     <bool>true</bool>
+    </property>
+    <property name="checked">
+     <bool>true</bool>
+    </property>
    </widget>
    <widget class="QPushButton" name="normalViewButton">
     <property name="geometry">
      <rect>
       <x>0</x>
       <y>180</y>
-      <width>64</width>
-      <height>64</height>
+      <width>60</width>
+      <height>60</height>
      </rect>
     </property>
     <property name="sizePolicy">
@@ -465,14 +490,14 @@ QPushButton:hover:!pressed {
     </property>
     <property name="minimumSize">
      <size>
-      <width>64</width>
-      <height>64</height>
+      <width>60</width>
+      <height>60</height>
      </size>
     </property>
     <property name="maximumSize">
      <size>
-      <width>64</width>
-      <height>64</height>
+      <width>60</width>
+      <height>60</height>
      </size>
     </property>
     <property name="styleSheet">
@@ -482,9 +507,11 @@ QPushButton:hover:!pressed {
 	border-style: solid;
 	border-width: 0px 0px 0px 0px;
 }
-QPushButton:hover:!pressed {
-	border-left: 4px solid #39B4FF;
-	padding-right: 2px;
+QPushButton:hover {
+	background-color: #DE2B41;
+}
+QPushButton:checked {
+	background-color: #DE2B41;
 }
 </string>
     </property>
@@ -501,7 +528,27 @@ QPushButton:hover:!pressed {
       <height>32</height>
      </size>
     </property>
+    <property name="checkable">
+     <bool>true</bool>
+    </property>
+    <property name="checked">
+     <bool>false</bool>
+    </property>
    </widget>
+   <widget class="QWidget" name="sideBar" native="true">
+    <property name="geometry">
+     <rect>
+      <x>0</x>
+      <y>120</y>
+      <width>60</width>
+      <height>450</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: #2D363E;</string>
+    </property>
+   </widget>
+   <zorder>sideBar</zorder>
    <zorder>titleBar</zorder>
    <zorder>toolBar</zorder>
    <zorder>viewWidget</zorder>
@@ -516,10 +563,22 @@ QPushButton:hover:!pressed {
    <property name="enabled">
     <bool>true</bool>
    </property>
+   <property name="sizePolicy">
+    <sizepolicy hsizetype="Minimum" vsizetype="Maximum">
+     <horstretch>0</horstretch>
+     <verstretch>0</verstretch>
+    </sizepolicy>
+   </property>
    <property name="minimumSize">
     <size>
      <width>0</width>
-     <height>32</height>
+     <height>30</height>
+    </size>
+   </property>
+   <property name="maximumSize">
+    <size>
+     <width>1000</width>
+     <height>30</height>
     </size>
    </property>
   </widget>

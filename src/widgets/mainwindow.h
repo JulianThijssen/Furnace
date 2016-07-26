@@ -28,6 +28,8 @@ private slots:
 
     void on_modelViewButton_clicked();
 
+    void on_normalViewButton_clicked();
+
 private:
     Ui::MainWindow *ui;
 };
