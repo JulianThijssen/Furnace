@@ -16,7 +16,7 @@
 #include <QDebug>
 
 const int UPDATE_RATE = 10;
-const int TILES = 4;
+const int TILES = 8;
 
 ViewWidget::ViewWidget(QWidget* parent) :
     QOpenGLWidget(parent),
@@ -26,7 +26,8 @@ ViewWidget::ViewWidget(QWidget* parent) :
     normalShader(nullptr),
     tilesShader(nullptr),
     colorShader(nullptr),
-    cage(nullptr)
+    cage(nullptr),
+    resolution(1024)
 {
     timer = new QTimer(this);
     connect(timer, SIGNAL(timeout()), this, SLOT(tick()));
@@ -61,6 +62,11 @@ void ViewWidget::setLowPoly(QString fileName) {
 void ViewWidget::setHighPoly(QString fileName) {
     makeCurrent();
     highPoly = ModelLoader::loadModel(fileName.toStdString().c_str(), true);
+}
+
+void ViewWidget::setResolution(const unsigned int res) {
+    qDebug() << "Setting texture resolution to " << res << "x" << res;
+    resolution = res;
 }
 
 void ViewWidget::save(QString fileName) {
@@ -207,7 +213,7 @@ void ViewWidget::renderNormal(const int width, const int height) {
     makeCurrent();
 
 qDebug() << "Rendering normal..";
-    bakeBuffer->setTexture(width, height);
+    bakeBuffer->setTexture(resolution, resolution);
     bakeBuffer->enable();
 
     glClearColor(0.5f, 0.5f, 1, 1);
@@ -286,8 +292,8 @@ qDebug() << "Rendering normal..";
             projMatrix[12] = (-right - left) / (right - left);
             projMatrix[13] = (-top - bottom) / (top - bottom);
             projMatrix[14] = (-zFar - zNear) / (zFar - zNear);
-            float tileWidth = width / TILES;
-            float tileHeight = height / TILES;
+            float tileWidth = resolution / TILES;
+            float tileHeight = resolution / TILES;
             glViewport(x * tileWidth, y * tileHeight, tileWidth, tileHeight);
 
             normalShader->uniformMatrix4f("projMatrix", projMatrix);
@@ -303,9 +309,9 @@ qDebug() << "Rendering normal..";
 
     cage->unbind();
 
-    unsigned char *pixels = new unsigned char[width * height * 4];
-    glReadPixels(0, 0, width, height, GL_RGBA, GL_UNSIGNED_BYTE, pixels);
-    normalMap = new Image(width, height);
+    unsigned char *pixels = new unsigned char[resolution * resolution * 4];
+    glReadPixels(0, 0, resolution, resolution, GL_RGBA, GL_UNSIGNED_BYTE, pixels);
+    normalMap = new Image(resolution, resolution);
     normalMap->setData(pixels);
 
     bakedNormal = bakeBuffer->getTexture();

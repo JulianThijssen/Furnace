@@ -25,6 +25,7 @@ public:
 
     void setLowPoly(QString fileName);
     void setHighPoly(QString fileName);
+    void setResolution(const unsigned int resolution);
     void save(QString fileName);
 
     void renderNormal(const int width, const int height);
@@ -57,6 +58,7 @@ private:
     GLuint debugNormals = 0;
     GLuint bakedNormal = 0;
 
+    unsigned int resolution;
     Image* normalMap;
 };
 

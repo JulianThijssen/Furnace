@@ -30,6 +30,8 @@ private slots:
 
     void on_normalViewButton_pressed();
 
+    void on_comboBox_currentIndexChanged(int index);
+
 private:
     Ui::MainWindow *ui;
 };

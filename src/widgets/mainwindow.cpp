@@ -84,3 +84,24 @@ void MainWindow::on_normalViewButton_pressed()
 {
     ui->modelViewButton->setChecked(false);
 }
+
+void MainWindow::on_comboBox_currentIndexChanged(int index)
+{
+    int resolution;
+
+    switch (index) {
+    case 0: resolution = 128; break;
+    case 1: resolution = 256; break;
+    case 2: resolution = 512; break;
+    case 3: resolution = 1024; break;
+    case 4: resolution = 2048; break;
+    case 5: resolution = 4096; break;
+    case 6: resolution = 8192; break;
+    default: {
+        resolution = 1024;
+        qDebug() << "Unrecognised resolution setting";
+    }
+    }
+
+    ui->viewWidget->setResolution(resolution);
+}
