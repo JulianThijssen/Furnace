@@ -7,6 +7,11 @@ Shader::Shader(GLuint handle) {
     this->handle = handle;
 }
 
+Shader::~Shader() {
+    QOpenGLFunctions_3_2_Core *f = QOpenGLContext::currentContext()->versionFunctions<QOpenGLFunctions_3_2_Core>();
+    f->glDeleteProgram(handle);
+}
+
 void Shader::bind() {
     QOpenGLFunctions_3_2_Core *f = QOpenGLContext::currentContext()->versionFunctions<QOpenGLFunctions_3_2_Core>();
     f->glUseProgram(handle);

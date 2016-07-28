@@ -10,23 +10,14 @@ const int TILES = 8;
 
 ModelRenderer::ModelRenderer() :
     diffuseShader(nullptr),
-    normalShader(nullptr),
-    tilesShader(nullptr),
     colorShader(nullptr)
 {
 
 }
 
 ModelRenderer::~ModelRenderer() {
-    qDebug() << "Freeing resources";
-    glDeleteShader(diffuseShader->handle);
-    glDeleteShader(normalShader->handle);
-    glDeleteShader(tilesShader->handle);
-    glDeleteShader(colorShader->handle);
-    free(diffuseShader);
-    free(normalShader);
-    free(tilesShader);
-    free(colorShader);
+    delete diffuseShader;
+    delete colorShader;
     qDebug() << "ModelRenderer destroyed!";
 }
 
@@ -34,8 +25,6 @@ void ModelRenderer::init() {
     initializeOpenGLFunctions();
 
     diffuseShader = ShaderLoader::loadShaders("res/diffuse.vert", "res/diffuse.frag");
-    normalShader = ShaderLoader::loadShaders("res/normal.vert", "res/normal.frag");
-    tilesShader = ShaderLoader::loadShaders("res/tiles.vert", "res/tiles.frag");
     colorShader = ShaderLoader::loadShaders("res/color.vert", "res/color.frag");
 
     glClearColor(0, 0, 0, 1);
@@ -63,18 +52,6 @@ void ModelRenderer::resize(int w, int h) {
     colorShader->bind();
     colorShader->uniformMatrix4f("projMatrix", projMatrix);
     colorShader->unbind();
-
-    projMatrix.setIdentity();
-    projMatrix[0] = 2 / (1 - 0);
-    projMatrix[5] = 2 / (1 - 0);
-    projMatrix[10] = -2 / (1 - -1);
-    projMatrix[12] = (-1 - 0) / (1 - 0);
-    projMatrix[13] = (-1 - 0) / (1 - 0);
-    projMatrix[14] = (-1 - -1) / (1 - -1);
-
-    normalShader->bind();
-    normalShader->uniformMatrix4f("projMatrix", projMatrix);
-    normalShader->unbind();
 }
 
 float t = 0;

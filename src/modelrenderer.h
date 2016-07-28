@@ -24,8 +24,6 @@ public:
     void render(const Scene& scene);
 private:
     Shader* diffuseShader;
-    Shader* normalShader;
-    Shader* tilesShader;
     Shader* colorShader;
 };
 

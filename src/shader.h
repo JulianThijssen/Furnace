@@ -13,6 +13,7 @@ public:
     GLuint handle;
 
     Shader(GLuint handle);
+    ~Shader();
     void bind();
     void unbind();
     int location(const char* uniform);

@@ -24,13 +24,9 @@ NormalMapRenderer::NormalMapRenderer() :
 
 NormalMapRenderer::~NormalMapRenderer()
 {
-    qDebug() << "Freeing resources";
-    glDeleteShader(diffuseShader->handle);
-    glDeleteShader(normalShader->handle);
-    glDeleteShader(tilesShader->handle);
-    free(diffuseShader);
-    free(normalShader);
-    free(tilesShader);
+    delete diffuseShader;
+    delete normalShader;
+    delete tilesShader;
     qDebug() << "NormalMapRenderer destroyed!";
 }
 
