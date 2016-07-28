@@ -53,7 +53,7 @@ void MainWindow::on_importHighButton_clicked()
 
 void MainWindow::on_bakeNormalButton_clicked()
 {
-    ui->viewWidget->renderNormal(1024, 1024);
+    ui->viewWidget->bake(0);
 }
 
 void MainWindow::on_exportNormalButton_clicked()
@@ -67,7 +67,7 @@ void MainWindow::on_exportNormalButton_clicked()
         return;
     }
     qDebug() << fileName;
-    ui->viewWidget->save(fileName);
+    ui->viewWidget->save(fileName, 0);
 }
 
 void MainWindow::on_closeButton_clicked()

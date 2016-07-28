@@ -1,22 +1,17 @@
 #ifndef VIEWWIDGET_H
 #define VIEWWIDGET_H
 
+#include "../scene.h"
+#include "../modelrenderer.h"
+#include "../normalmaprenderer.h"
+
 #include <QObject>
 #include <QWidget>
 #include <QOpenGLWidget>
-
-#include <QOpenGLFunctions_3_2_Core>
-#include <QOpenGLTexture>
 #include <QString>
 #include <QTimer>
 
-#include "../framebuffer.h"
-#include "../model.h"
-#include "../shader.h"
-#include "../image.h"
-#include "../util/matrix4f.h"
-
-class ViewWidget : public QOpenGLWidget, protected QOpenGLFunctions_3_2_Core
+class ViewWidget : public QOpenGLWidget
 {
     Q_OBJECT
 public:
@@ -25,10 +20,10 @@ public:
 
     void setLowPoly(QString fileName);
     void setHighPoly(QString fileName);
-    void setResolution(const unsigned int resolution);
-    void save(QString fileName);
+    void setResolution(const unsigned int res);
 
-    void renderNormal(const int width, const int height);
+    void bake(int map);
+    void save(QString fileName, int map);
 
 public slots:
     void tick();
@@ -40,26 +35,11 @@ protected:
 
     void paintGL();
 private:
+    Scene scene;
+    ModelRenderer* modelRenderer;
+    NormalMapRenderer* normalMapRenderer;
+
     QTimer* timer;
-
-    Framebuffer* bakeBuffer;
-
-    Shader* diffuseShader;
-    Shader* normalShader;
-    Shader* tilesShader;
-    Shader* colorShader;
-
-    Mesh* cage;
-    Model* lowPoly;
-    Model* highPoly;
-    Model* quad;
-
-    QOpenGLTexture* texture;
-    GLuint debugNormals = 0;
-    GLuint bakedNormal = 0;
-
-    unsigned int resolution;
-    Image* normalMap;
 };
 
 #endif // VIEWWIDGET_H

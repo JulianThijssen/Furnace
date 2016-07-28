@@ -32,7 +32,9 @@ SOURCES += src/main.cpp\
     src/util/math.cpp \
     src/cage.cpp \
     src/framebuffer.cpp \
-    src/widgets/titlebar.cpp
+    src/widgets/titlebar.cpp \
+    src/modelrenderer.cpp \
+    src/normalmaprenderer.cpp
 
 HEADERS  += src/widgets/mainwindow.h \
     src/widgets/viewwidget.h \
@@ -51,7 +53,10 @@ HEADERS  += src/widgets/mainwindow.h \
     src/util/math.h \
     src/cage.h \
     src/framebuffer.h \
-    src/widgets/titlebar.h
+    src/widgets/titlebar.h \
+    src/modelrenderer.h \
+    src/normalmaprenderer.h \
+    src/scene.h
 
 FORMS    += src/mainwindow.ui
 
