@@ -34,7 +34,9 @@ SOURCES += src/main.cpp\
     src/framebuffer.cpp \
     src/widgets/titlebar.cpp \
     src/modelrenderer.cpp \
-    src/normalmaprenderer.cpp
+    src/normalmaprenderer.cpp \
+    src/widgets/modeloptions.cpp \
+    src/widgets/normalmapoptions.cpp \
 
 HEADERS  += src/widgets/mainwindow.h \
     src/widgets/viewwidget.h \
@@ -56,8 +58,13 @@ HEADERS  += src/widgets/mainwindow.h \
     src/widgets/titlebar.h \
     src/modelrenderer.h \
     src/normalmaprenderer.h \
-    src/scene.h
+    src/scene.h \
+    src/widgets/modeloptions.h \
+    src/widgets/normalmapoptions.h \
+    src/widgets/optionsstack.h
 
-FORMS    += src/mainwindow.ui
+FORMS    += src/mainwindow.ui \
+    src/modeloptions.ui \
+    src/normalmapoptions.ui
 
 LIBS += -L"../3rdparty/assimp/lib" -lassimp

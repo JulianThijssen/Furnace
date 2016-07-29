@@ -78,11 +78,13 @@ void MainWindow::on_closeButton_clicked()
 void MainWindow::on_modelViewButton_pressed()
 {
     ui->normalViewButton->setChecked(false);
+    ui->optionsStack->setCurrentIndex(0);
 }
 
 void MainWindow::on_normalViewButton_pressed()
 {
     ui->modelViewButton->setChecked(false);
+    ui->optionsStack->setCurrentIndex(1);
 }
 
 void MainWindow::on_comboBox_currentIndexChanged(int index)

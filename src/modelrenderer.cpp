@@ -6,7 +6,6 @@
 #include <QDebug>
 
 const int UPDATE_RATE = 10;
-const int TILES = 8;
 
 ModelRenderer::ModelRenderer() :
     diffuseShader(nullptr),

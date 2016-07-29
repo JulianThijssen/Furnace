@@ -566,7 +566,7 @@ QPushButton:checked {
      <string notr="true">background-color: #2D363E;</string>
     </property>
    </widget>
-   <widget class="QWidget" name="configureBar" native="true">
+   <widget class="OptionsStack" name="optionsStack">
     <property name="geometry">
      <rect>
       <x>60</x>
@@ -593,91 +593,8 @@ QPushButton:checked {
       <height>450</height>
      </size>
     </property>
-    <layout class="QGridLayout">
-     <item row="2" column="0">
-      <widget class="QComboBox" name="comboBox">
-       <property name="sizePolicy">
-        <sizepolicy hsizetype="Maximum" vsizetype="Maximum">
-         <horstretch>0</horstretch>
-         <verstretch>0</verstretch>
-        </sizepolicy>
-       </property>
-       <property name="minimumSize">
-        <size>
-         <width>60</width>
-         <height>30</height>
-        </size>
-       </property>
-       <property name="maximumSize">
-        <size>
-         <width>60</width>
-         <height>30</height>
-        </size>
-       </property>
-       <property name="styleSheet">
-        <string notr="true">background-color: rgb(230, 230, 230);</string>
-       </property>
-       <item>
-        <property name="text">
-         <string>128px</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>256px</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>512px</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>1024px</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>2048px</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>4096px</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>8192px</string>
-        </property>
-       </item>
-      </widget>
-     </item>
-     <item row="6" column="0">
-      <spacer name="verticalSpacer">
-       <property name="orientation">
-        <enum>Qt::Vertical</enum>
-       </property>
-       <property name="sizeHint" stdset="0">
-        <size>
-         <width>20</width>
-         <height>40</height>
-        </size>
-       </property>
-      </spacer>
-     </item>
-     <item row="1" column="0">
-      <widget class="QLabel" name="label">
-       <property name="styleSheet">
-        <string notr="true">color: rgb(230, 230, 230);</string>
-       </property>
-       <property name="text">
-        <string>Texture Size: </string>
-       </property>
-      </widget>
-     </item>
-    </layout>
+    <widget class="ModelOptions" name="modelOptions"/>
+    <widget class="NormalMapOptions" name="normalMapOptions"/>
    </widget>
    <zorder>sideBar</zorder>
    <zorder>titleBar</zorder>
@@ -689,7 +606,7 @@ QPushButton:checked {
    <zorder>importLowButton</zorder>
    <zorder>modelViewButton</zorder>
    <zorder>normalViewButton</zorder>
-   <zorder>configureBar</zorder>
+   <zorder>optionsStack</zorder>
   </widget>
   <widget class="QStatusBar" name="statusBar">
    <property name="enabled">
@@ -726,6 +643,24 @@ QPushButton:checked {
    <class>TitleBar</class>
    <extends>QWidget</extends>
    <header>titlebar.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>ModelOptions</class>
+   <extends>QWidget</extends>
+   <header>modeloptions.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>NormalMapOptions</class>
+   <extends>QWidget</extends>
+   <header>normalmapoptions.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>OptionsStack</class>
+   <extends>QStackedWidget</extends>
+   <header>optionsstack.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>
