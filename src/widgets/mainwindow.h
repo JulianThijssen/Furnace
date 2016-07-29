@@ -32,6 +32,8 @@ private slots:
 
     void on_comboBox_currentIndexChanged(int index);
 
+    void on_showCageButton_toggled(bool checked);
+
 private:
     Ui::MainWindow *ui;
 };

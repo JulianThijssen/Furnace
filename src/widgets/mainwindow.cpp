@@ -107,3 +107,8 @@ void MainWindow::on_comboBox_currentIndexChanged(int index)
 
     ui->viewWidget->setResolution(resolution);
 }
+
+void MainWindow::on_showCageButton_toggled(bool checked)
+{
+    ui->viewWidget->getModelRenderer()->showCage(checked);
+}

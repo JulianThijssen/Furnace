@@ -19,12 +19,16 @@ public:
     ModelRenderer();
     ~ModelRenderer();
 
+    void showCage(bool show);
+
     void init();
     void resize(int w, int h);
     void render(const Scene& scene);
 private:
     Shader* diffuseShader;
     Shader* colorShader;
+
+    bool cageVisible;
 };
 
 #endif // MODELRENDERER_H

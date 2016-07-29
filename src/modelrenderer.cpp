@@ -9,7 +9,8 @@ const int UPDATE_RATE = 10;
 
 ModelRenderer::ModelRenderer() :
     diffuseShader(nullptr),
-    colorShader(nullptr)
+    colorShader(nullptr),
+    cageVisible(false)
 {
 
 }
@@ -18,6 +19,11 @@ ModelRenderer::~ModelRenderer() {
     delete diffuseShader;
     delete colorShader;
     qDebug() << "ModelRenderer destroyed!";
+}
+
+void ModelRenderer::showCage(bool show) {
+    cageVisible = show;
+    qDebug() << "Showing cage:" << show;
 }
 
 void ModelRenderer::init() {
@@ -87,16 +93,19 @@ void ModelRenderer::render(const Scene& scene) {
 
         colorShader->bind();
         colorShader->uniformMatrix4f("modelMatrix", modelMatrix);
-        // Render cage
-        colorShader->uniform3f("color", 1, 0.5f, 0);
 
-        glDisable(GL_CULL_FACE);
-        glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-        scene.cage->bind();
-        scene.cage->draw();
-        scene.cage->unbind();
-        glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
-        glEnable(GL_CULL_FACE);
+        // Render cage
+        if (cageVisible) {
+            colorShader->uniform3f("color", 1, 0.5f, 0);
+
+            glDisable(GL_CULL_FACE);
+            glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+            scene.cage->bind();
+            scene.cage->draw();
+            scene.cage->unbind();
+            glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+            glEnable(GL_CULL_FACE);
+        }
 
         // Render normals
         colorShader->uniform3f("color", 0, 1, 1);

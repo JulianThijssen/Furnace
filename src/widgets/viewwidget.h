@@ -25,6 +25,10 @@ public:
     void bake(int map);
     void save(QString fileName, int map);
 
+    ModelRenderer* getModelRenderer() {
+        return modelRenderer;
+    }
+
 public slots:
     void tick();
 

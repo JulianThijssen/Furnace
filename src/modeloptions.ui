@@ -34,6 +34,37 @@
   <property name="styleSheet">
    <string notr="true">background-color: rgb(16, 21, 26);</string>
   </property>
+  <widget class="QPushButton" name="showCageButton">
+   <property name="geometry">
+    <rect>
+     <x>40</x>
+     <y>60</y>
+     <width>60</width>
+     <height>60</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QPushButton {
+	background-color: #2D363E;
+	border-color: rgb(230, 230, 230);
+	border-style: solid;
+	border-width: 0px 0px 0px 0px;
+}
+QPushButton:hover {
+	background-color: #DE2B41;
+}
+QPushButton:checked {
+	background-color: #DE2B41;
+}
+</string>
+   </property>
+   <property name="text">
+    <string>Show Cage</string>
+   </property>
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+  </widget>
  </widget>
  <resources/>
  <connections/>
