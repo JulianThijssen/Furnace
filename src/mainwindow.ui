@@ -182,73 +182,6 @@ QPushButton:hover:!pressed {
      <string>HIGHPOLY</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="bakeNormalButton">
-    <property name="geometry">
-     <rect>
-      <x>200</x>
-      <y>80</y>
-      <width>100</width>
-      <height>40</height>
-     </rect>
-    </property>
-    <property name="sizePolicy">
-     <sizepolicy hsizetype="Maximum" vsizetype="Maximum">
-      <horstretch>0</horstretch>
-      <verstretch>0</verstretch>
-     </sizepolicy>
-    </property>
-    <property name="minimumSize">
-     <size>
-      <width>100</width>
-      <height>40</height>
-     </size>
-    </property>
-    <property name="maximumSize">
-     <size>
-      <width>100</width>
-      <height>40</height>
-     </size>
-    </property>
-    <property name="styleSheet">
-     <string notr="true">QPushButton {
-	background-color: rgb(62, 71, 80);
-	border-color: rgb(68, 80, 85);
-	border-style: solid;
-	border-width: 0px 1px 0px 0px;
-	color: rgb(122, 122, 122);
-	font: 75 8pt &quot;Trebuchet MS&quot;;
-	font-weight: bold;
-}
-QPushButton:hover:!pressed {
-	border-bottom: 4px solid #DE2B41;
-	padding-top: 4px;
-}
-</string>
-    </property>
-    <property name="text">
-     <string>BAKE</string>
-    </property>
-    <property name="icon">
-     <iconset resource="../furnace.qrc">
-      <normaloff>:/res/FurnaceButton.png</normaloff>
-      <normalon>:/res/FurnaceButtonClicked.png</normalon>:/res/FurnaceButton.png</iconset>
-    </property>
-    <property name="iconSize">
-     <size>
-      <width>16</width>
-      <height>16</height>
-     </size>
-    </property>
-    <property name="checkable">
-     <bool>false</bool>
-    </property>
-    <property name="checked">
-     <bool>false</bool>
-    </property>
-    <property name="flat">
-     <bool>false</bool>
-    </property>
-   </widget>
    <widget class="QPushButton" name="exportNormalButton">
     <property name="geometry">
      <rect>
@@ -600,7 +533,6 @@ QPushButton:checked {
    <zorder>titleBar</zorder>
    <zorder>toolBar</zorder>
    <zorder>viewWidget</zorder>
-   <zorder>bakeNormalButton</zorder>
    <zorder>exportNormalButton</zorder>
    <zorder>importHighButton</zorder>
    <zorder>importLowButton</zorder>

@@ -118,6 +118,44 @@
      </property>
     </spacer>
    </item>
+   <item row="3" column="0">
+    <widget class="QPushButton" name="bakeNormalButton">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Maximum" vsizetype="Maximum">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="minimumSize">
+      <size>
+       <width>80</width>
+       <height>40</height>
+      </size>
+     </property>
+     <property name="maximumSize">
+      <size>
+       <width>80</width>
+       <height>40</height>
+      </size>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">QPushButton {
+	background-color: rgb(230, 230, 230);
+	border-color: rgb(230, 230, 230);
+	border-style: solid;
+	border-width: 0px 0px 0px 0px;
+}
+QPushButton:hover {
+	background-color: #DE2B41;
+}
+
+</string>
+     </property>
+     <property name="text">
+      <string>BAKE</string>
+     </property>
+    </widget>
+   </item>
   </layout>
  </widget>
  <resources/>
