@@ -1,11 +1,14 @@
 #include "shaderloader.h"
 
-#include <fstream>
+#include <string>
+
+#include <QTextStream>
+#include <QFile>
 #include <QDebug>
 
 const int ShaderLoader::LOG_SIZE = 1024;
 
-Shader* ShaderLoader::loadShaders(std::string vertPath, std::string fragPath) {
+Shader* ShaderLoader::loadShaders(QString vertPath, QString fragPath) {
     QOpenGLFunctions *f = QOpenGLContext::currentContext()->functions();
 
     int vertexShader = loadShader(vertPath, GL_VERTEX_SHADER);
@@ -26,25 +29,25 @@ Shader* ShaderLoader::loadShaders(std::string vertPath, std::string fragPath) {
     return shader;
 }
 
-GLuint ShaderLoader::loadShader(std::string path, int type) {
+GLuint ShaderLoader::loadShader(QString path, int type) {
     QOpenGLFunctions *f = QOpenGLContext::currentContext()->functions();
 
     int handle = 0;
 
-    qDebug() << "Loading shader file: " << path.c_str();
+    qDebug() << "Loading shader file: " << path;
     // Read all lines and append together
-    std::ifstream file(path);
-    if (file.fail() || !file.is_open()) {
-        qDebug() << "No such file: " << path.c_str();
+    QFile file(path);
+    if (!file.open(QFile::ReadOnly | QFile::Text)) {
+        qDebug() << "No such file: " << path;
+        return 0;
     }
+    QTextStream in(&file);
 
-    std::string source;
-    std::string line;
-    while (std::getline(file, line)) {
-        source.append(line + "\n");
-    }
+    QString source;
+    source.append(in.readAll());
 
-    const char* csource = source.c_str();
+    std::string ssource = source.toStdString();
+    const char* csource = ssource.c_str();
 
     // Create the shader
     handle = f->glCreateShader(type);
@@ -59,7 +62,7 @@ GLuint ShaderLoader::loadShader(std::string path, int type) {
         f->glGetShaderInfoLog(handle, LOG_SIZE, nullptr, log);
         qDebug() << log;
     } else {
-        qDebug() << "Successfully compiled shader: " << path.c_str();
+        qDebug() << "Successfully compiled shader: " << path;
     }
 
     return handle;

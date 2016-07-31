@@ -4,15 +4,15 @@
 #include "Shader.h"
 
 #include <QOpenGLFunctions>
-#include <string>
+#include <QString>
 
 class ShaderLoader
 {
 public:
     static const int LOG_SIZE;
 
-    static Shader* loadShaders(std::string vertPath, std::string fragPath);
-    static GLuint loadShader(std::string path, int type);
+    static Shader* loadShaders(QString vertPath, QString fragPath);
+    static GLuint loadShader(QString path, int type);
 };
 
 #endif // SHADERLOADER_H
