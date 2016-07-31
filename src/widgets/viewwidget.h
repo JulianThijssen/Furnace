@@ -18,6 +18,7 @@ public:
     ViewWidget(QWidget* parent);
     ~ViewWidget();
 
+    void setView(const unsigned int view);
     void setLowPoly(QString fileName);
     void setHighPoly(QString fileName);
     void setResolution(const unsigned int res);
@@ -44,6 +45,8 @@ private:
     NormalMapRenderer* normalMapRenderer;
 
     QTimer* timer;
+
+    unsigned int view;
 };
 
 #endif // VIEWWIDGET_H

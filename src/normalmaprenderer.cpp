@@ -91,8 +91,7 @@ void NormalMapRenderer::render(const Scene& scene) {
 
         Matrix4f modelMatrix;
         modelMatrix.setIdentity();
-        modelMatrix.translate(Vector3f(1.0f, -0.75f, -1.f));
-        modelMatrix.scale(Vector3f(0.25f, 0.25f, 1));
+        modelMatrix.translate(Vector3f(0, 0, -1.f));
         diffuseShader->uniformMatrix4f("modelMatrix", modelMatrix);
 
         Mesh mesh = scene.quad->meshes[0];

@@ -9,7 +9,8 @@
 const int UPDATE_RATE = 10;
 
 ViewWidget::ViewWidget(QWidget* parent) :
-    QOpenGLWidget(parent)
+    QOpenGLWidget(parent),
+    view(0)
 {
     timer = new QTimer(this);
     connect(timer, SIGNAL(timeout()), this, SLOT(tick()));
@@ -22,6 +23,10 @@ ViewWidget::~ViewWidget() {
     delete modelRenderer;
     delete normalMapRenderer;
     qDebug() << "Ready to close...";
+}
+
+void ViewWidget::setView(const unsigned int view) {
+    this->view = view;
 }
 
 void ViewWidget::setLowPoly(QString fileName) {
@@ -72,6 +77,10 @@ void ViewWidget::resizeGL(int w, int h) {
 }
 
 void ViewWidget::paintGL() {
-    modelRenderer->render(scene);
-    //normalMapRenderer->render(scene);
+    if (view == 0) {
+        modelRenderer->render(scene);
+    }
+    else if (view == 1) {
+        normalMapRenderer->render(scene);
+    }
 }
