@@ -39,9 +39,9 @@ void NormalMapRenderer::init() {
 
     bakeBuffer = new Framebuffer();
 
-    diffuseShader = ShaderLoader::loadShaders("res/diffuse.vert", "res/diffuse.frag");
-    normalShader = ShaderLoader::loadShaders("res/normal.vert", "res/normal.frag");
-    tilesShader = ShaderLoader::loadShaders("res/tiles.vert", "res/tiles.frag");
+    diffuseShader = ShaderLoader::loadShaders(":/res/diffuse.vert", ":/res/diffuse.frag");
+    normalShader = ShaderLoader::loadShaders(":/res/normal.vert", ":/res/normal.frag");
+    tilesShader = ShaderLoader::loadShaders(":/res/tiles.vert", ":/res/tiles.frag");
 
     glClearColor(0, 0, 0, 1);
 

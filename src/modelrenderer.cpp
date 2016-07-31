@@ -29,8 +29,8 @@ void ModelRenderer::showCage(bool show) {
 void ModelRenderer::init() {
     initializeOpenGLFunctions();
 
-    diffuseShader = ShaderLoader::loadShaders("res/diffuse.vert", "res/diffuse.frag");
-    colorShader = ShaderLoader::loadShaders("res/color.vert", "res/color.frag");
+    diffuseShader = ShaderLoader::loadShaders(":/res/diffuse.vert", ":/res/diffuse.frag");
+    colorShader = ShaderLoader::loadShaders(":/res/color.vert", ":/res/color.frag");
 
     glClearColor(0, 0, 0, 1);
 

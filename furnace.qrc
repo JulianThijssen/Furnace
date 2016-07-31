@@ -7,5 +7,13 @@
     <file>res/CloseButton.png</file>
     <file>res/ModelViewButton.png</file>
     <file>res/NormalViewButton.png</file>
+    <file>res/diffuse.vert</file>
+    <file>res/diffuse.frag</file>
+    <file>res/normal.vert</file>
+    <file>res/normal.frag</file>
+    <file>res/tiles.vert</file>
+    <file>res/tiles.frag</file>
+    <file>res/color.vert</file>
+    <file>res/color.frag</file>
 </qresource>
 </RCC>

@@ -2,10 +2,12 @@
 #include <QApplication>
 
 #include <QSurfaceFormat>
+#include <QDebug>
 
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
+    qDebug() << "Starting application...";
 
     QSurfaceFormat format;
     format.setDepthBufferSize(24);
