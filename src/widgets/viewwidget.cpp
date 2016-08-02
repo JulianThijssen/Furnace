@@ -68,7 +68,7 @@ void ViewWidget::initializeGL() {
     modelRenderer->init();
     normalMapRenderer->init();
 
-    scene.quad = ModelLoader::loadModel("res/Quad.obj", false);
+    scene.quad = ModelLoader::loadQuad();
 }
 
 void ViewWidget::resizeGL(int w, int h) {

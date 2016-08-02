@@ -7,13 +7,15 @@
 #include "mesh.h"
 
 #include <QOpenGLFunctions_3_2_Core>
+#include <QString>
 
 class ModelLoader
 {
 public:
     ModelLoader();
 
-    static Model* loadModel(const char* path, const bool resize);
+    static Model* loadModel(QString path, const bool resize);
+    static Model* loadQuad();
 
     static GLuint createDebugNormals(Mesh& mesh, const float length);
     static void uploadMesh(Mesh& mesh);

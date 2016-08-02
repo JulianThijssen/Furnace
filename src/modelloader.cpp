@@ -13,17 +13,106 @@ ModelLoader::ModelLoader()
 
 }
 
-Model* ModelLoader::loadModel(const char* path, const bool resize) {
+Model* ModelLoader::loadModel(QString path, const bool resize) {
     Assimp::Importer importer;
 
     unsigned int flags = aiProcess_CalcTangentSpace | aiProcess_Triangulate | aiProcess_GenNormals | aiProcess_SortByPType | aiProcess_GenUVCoords | aiProcess_JoinIdenticalVertices;
-    const aiScene* scene = importer.ReadFile(path, flags);
+    const aiScene* scene = importer.ReadFile(path.toStdString(), flags);
 
     if(!scene) {
         qDebug() << importer.GetErrorString();
     }
 
     Model* model = uploadModel(*scene, resize);
+
+    return model;
+}
+
+Model* ModelLoader::loadQuad() {
+    Mesh mesh;
+
+    mesh.vertices.resize(4, Vector3f());
+    mesh.vertices[0].set(-1, -1, 0);
+    mesh.vertices[1].set(1, -1, 0);
+    mesh.vertices[2].set(-1, 1, 0);
+    mesh.vertices[3].set(1, 1, 0);
+
+    mesh.texCoords.resize(4, Vector2f());
+    mesh.texCoords[0].set(0, 0);
+    mesh.texCoords[1].set(1, 0);
+    mesh.texCoords[2].set(0, 1);
+    mesh.texCoords[3].set(1, 1);
+
+    mesh.normals.resize(4, Vector3f());
+    mesh.normals[0].set(0, 0, 1);
+    mesh.normals[1].set(0, 0, 1);
+    mesh.normals[2].set(0, 0, 1);
+    mesh.normals[3].set(0, 0, 1);
+
+    mesh.indices.resize(6);
+    mesh.indices[0] = 0;
+    mesh.indices[1] = 1;
+    mesh.indices[2] = 2;
+    mesh.indices[3] = 2;
+    mesh.indices[4] = 1;
+    mesh.indices[5] = 3;
+
+    QOpenGLFunctions_3_2_Core *f = QOpenGLContext::currentContext()->versionFunctions<QOpenGLFunctions_3_2_Core>();
+
+    // Generate vertex array object
+    GLuint vao;
+    f->glGenVertexArrays(1, &vao);
+    f->glBindVertexArray(vao);
+
+    // Store faces in a buffer
+    GLuint faceVBO;
+    f->glGenBuffers(1, &faceVBO);
+    f->glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, faceVBO);
+    f->glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(unsigned int) * mesh.numFaces * 3, &mesh.indices[0], GL_STATIC_DRAW);
+    f->glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+
+    // Store vertices in a buffer
+    if (mesh.vertices.size()) {
+        GLuint vertexVBO;
+        f->glGenBuffers(1, &vertexVBO);
+        f->glBindBuffer(GL_ARRAY_BUFFER, vertexVBO);
+        f->glBufferData(GL_ARRAY_BUFFER, sizeof(float) * mesh.vertices.size() * 3, &mesh.vertices[0], GL_STATIC_DRAW);
+        f->glVertexAttribPointer(0, 3, GL_FLOAT, 0, 0, 0);
+        f->glEnableVertexAttribArray(0);
+    }
+
+    // Store texture coordinates in a buffer
+    if (mesh.texCoords.size()) {
+        GLuint texCoordVBO;
+        f->glGenBuffers(1, &texCoordVBO);
+        f->glBindBuffer(GL_ARRAY_BUFFER, texCoordVBO);
+        f->glBufferData(GL_ARRAY_BUFFER, sizeof(float) * mesh.texCoords.size() * 2, &mesh.texCoords[0], GL_STATIC_DRAW);
+        f->glVertexAttribPointer(1, 2, GL_FLOAT, 0, 0, 0);
+        f->glEnableVertexAttribArray(1);
+    }
+
+    // Store normals in a buffer
+    if (mesh.normals.size()) {
+        GLuint normalVBO;
+        f->glGenBuffers(1, &normalVBO);
+        f->glBindBuffer(GL_ARRAY_BUFFER, normalVBO);
+        f->glBufferData(GL_ARRAY_BUFFER, sizeof(float) * mesh.normals.size() * 3, &mesh.normals[0], GL_STATIC_DRAW);
+        f->glVertexAttribPointer(2, 3, GL_FLOAT, 0, 0, 0);
+        f->glEnableVertexAttribArray(2);
+    }
+
+    // Unbind the buffers
+    f->glBindBuffer(GL_ARRAY_BUFFER, 0);
+    f->glBindVertexArray(0);
+
+    Model* model = new Model();
+
+    // Store relevant data in the new mesh
+    mesh.handle = vao;
+    mesh.numFaces = 2;
+    mesh.faceVBO = faceVBO;
+
+    model->addMesh(mesh);
 
     return model;
 }
