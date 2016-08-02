@@ -1,3 +1,7 @@
+# Furnace specific ignores
+bin/
+build/
+
 # C++ objects and libs
 
 *.slo
